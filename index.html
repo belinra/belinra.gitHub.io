@@ -1,27 +1,21 @@
 
-    <!DOCTYPE html>
-    <html lang="zh-CN"
-            
-          
-    >
-    <head>
-    <meta charset="utf-8">
-    
 
-    
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
-    
-    <title>
-        
-        Belinra</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-    
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
 
-    
-<link rel="stylesheet" href="/css/loader.css">
 
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
     <meta name="description" content="Belinra�ĺ�԰������û�н�ʬ��">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Belinra">
@@ -30,527 +24,437 @@
 <meta property="og:description" content="Belinra�ĺ�԰������û�н�ʬ��">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-    
-        <link rel="alternate" href="/atom.xml" title="Belinra" type="application/atom+xml">
-    
-    
-        <link rel="shortcut icon" href="/images/favicon.ico">
-    
-    
-        
-<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Belinra</title>
 
-    
-    
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-    
-        
-<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
-    
-    
-        
-<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
 
-    
-    
-    
-    
-<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
 
-    
-        
-<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
 
-        
-<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-        <script>
-          new WOW({
-            offset: 0,
-            mobile: true,
-            live: false
-          }).init();
-        </script>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"qSGgNVy2qdAQpMrpJ55ZWYq8-gzGzoHsz","app_key":"31DwJuzW1dISx9Gbu9VKJJaV","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
     
+  
+
+
+
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
 
-    <body>
+
+<body>
+  
+
+  <header>
     
-<div id='loader'>
-  <div class="loading-left-bg"></div>
-  <div class="loading-right-bg"></div>
-  <div class="spinner-box">
-    <div class="loading-taichi">
-      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
-      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
-      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
-    </svg>
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Belinra</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div class="loading-word">少女祈祷中...</div>
   </div>
-</div>
-</div>
-
-<script>
-  const endLoading = function() {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loader').classList.add("loading");
-  }
-  window.addEventListener('load', endLoading);
-  document.getElementById('loader').addEventListener('click', endLoading);
-</script>
-
-
-    <div id="container">
-        <div id="wrap">
-            <header id="header">
-    
-        <img data-src="/images/banner.jpg" data-sizes="auto" alt="" class="lazyload">
-    
-    <div id="header-outer" class="outer">
-        <div id="header-title" class="inner">
-            <div id="logo-wrap">
-                
-                    
-                    
-                        <a href="/" id="logo"><h1>Belinra</h1></a>
-                    
-                
-            </div>
-            
-                
-                
-                    <h2 id="subtitle-wrap">
-                        <a href="/" id="subtitle">Belinra</a>
-                    </h2>
-                
-            
-        </div>
-        <div id="header-inner">
-            <nav id="main-nav">
-                <a id="main-nav-toggle" class="nav-icon"></a>
-                
-                    <span class="main-nav-link-wrap">
-                        <span class="main-nav-icon"></span>
-                        <a class="main-nav-link" href="/">首页</a>
-                    </span>
-                
-                    <span class="main-nav-link-wrap">
-                        <span class="main-nav-icon"></span>
-                        <a class="main-nav-link" href="/archives">归档</a>
-                    </span>
-                
-                    <span class="main-nav-link-wrap">
-                        <span class="main-nav-icon"></span>
-                        <a class="main-nav-link" href="/about">关于</a>
-                    </span>
-                
-                    <span class="main-nav-link-wrap">
-                        <span class="main-nav-icon"></span>
-                        <a class="main-nav-link" href="/friend">友链</a>
-                    </span>
-                
-            </nav>
-            <nav id="sub-nav">
-                
-                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
-                       title="RSS 订阅"></a>
-                
-                
-                    <a id="nav-search-btn" class="nav-icon popup-trigger" title="搜索">
-                    </a>
-                
-            </nav>
-            <div id="search-form-wrap">
-                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-            </div>
-        </div>
-    </div>
-</header>
-
-            <div id="content" class="outer">
-                <section id="main">
-    
-        
-    <div class="post-wrap-left wow fadeInUp">
-        
-            <a class="post-link" href="/2023/07/20/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"></a>
-        
-        
-        <div class="post-cover-left">
-            
-                
-                
-                    <img data-src="/images/banner.jpg" data-sizes="auto" alt="测试文章" class="lazyload">
-                
-            
-
-        </div>
-        <div class="post-info">
-            <div class="post-meta">
-                <a><span class="icon-calendar"></span>2023-07-20</a>
-                
-                    <a><span class="icon-pencil"></span>8 字</a>
-                
-                
-                    <a><span class="icon-clock"></span>1 分钟</a>
-                
-            </div>
-            <h2 class="post-title">测试文章</h2>
-            <article class="post-article">
-                
-                    这是一篇测试文章
-
-                
-            </article>
-        </div>
-    </div>
-
-
-    
-
-
-
-</section>
-                
-                    <aside id="sidebar">
-    <div class="sidebar-wrap wow fadeInRight">
-        <div class="sidebar-author">
-            <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="John Doe" class="lazyload">
-            <div class="sidebar-author-name">John Doe</div>
-            <div class="sidebar-description">Belinra�ĺ�԰������û�н�ʬ��</div>
-        </div>
-        <div class="sidebar-state">
-            <div class="sidebar-state-article">
-                <div>文章</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-            <div class="sidebar-state-category">
-                <div>分类</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-            <div class="sidebar-state-tag">
-                <div>标签</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-        </div>
-        <div class="sidebar-social">
-            
-                <div class=icon-github>
-                    <a href=https://github.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-google>
-                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-twitter>
-                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-facebook>
-                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-        </div>
-        <div class="sidebar-menu">
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">首页</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">归档</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/about"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">关于</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">友链</div>
-                </div>
-            
-        </div>
-    </div>
-    
-        
-    <div class="widget-wrap wow fadeInRight">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li></ul>
-        </div>
-    </div>
-
-
-    
-        
-    <div class="widget-wrap wow fadeInRight">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 10px;">原创</a>
-        </div>
-    </div>
-
-
-    
-        
-    <div class="widget-wrap wow fadeInRight">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li></ul>
-        </div>
-    </div>
-
-
-    
-</aside>
-
-                
-            </div>
-            <footer id="footer" class="wow fadeInUp">
-    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            
-            <div>
-                <span class="icon-copyright"></span>
-                2020-2023
-                <span class="footer-info-sep"></span>
-                John Doe
-            </div>
-            
-                <div>
-                    基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
-                    Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
-                </div>
-            
-            
-                <div>
-                    <span class="icon-brush"></span>
-                    8
-                    &nbsp;|&nbsp;
-                    <span class="icon-coffee"></span>
-                    00:01
-                </div>
-            
-            
-                <div>
-                    <span class="icon-eye"></span>
-                    <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
-                    &nbsp;|&nbsp;
-                    <span class="icon-user"></span>
-                    <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
-                </div>
-            
-        </div>
-    </div>
-</footer>
-
-        </div>
-        <nav id="mobile-nav">
-    <div class="sidebar-wrap">
-        <div class="sidebar-author">
-            <img data-src="/avatar/avatar.jpg" data-sizes="auto" alt="John Doe" class="lazyload">
-            <div class="sidebar-author-name">John Doe</div>
-            <div class="sidebar-description">Belinra�ĺ�԰������û�н�ʬ��</div>
-        </div>
-        <div class="sidebar-state">
-            <div class="sidebar-state-article">
-                <div>文章</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-            <div class="sidebar-state-category">
-                <div>分类</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-            <div class="sidebar-state-tag">
-                <div>标签</div>
-                <div class="sidebar-state-number">1</div>
-            </div>
-        </div>
-        <div class="sidebar-social">
-            
-                <div class=icon-github>
-                    <a href=https://github.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-google>
-                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-twitter>
-                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-                <div class=icon-facebook>
-                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
-                </div>
-            
-        </div>
-        <div class="sidebar-menu">
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">首页</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">归档</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/about"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">关于</div>
-                </div>
-            
-                <div class="sidebar-menu-link-wrap">
-                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
-                    <span class="sidebar-menu-icon"></span>
-                    <div class="sidebar-menu-link">友链</div>
-                </div>
-            
-        </div>
-    </div>
 </nav>
 
-        
-<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+  
 
-
-<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
-
-
-<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
-
-
-
-    
-<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-
-
-    
-<script src="https://unpkg.com/busuanzi@2.3.0/bsz.pure.mini.js"></script>
-
-
-
-
-    
-<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
-
-    <script>
-        if (window.mermaid) {
-            mermaid.initialize({theme: 'forest'});
-        }
-    </script>
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-    
-<script src="https://unpkg.com/valine@1.5.1/dist/Valine.min.js"></script>
-
-    <script>
-        var GUEST_INFO = ['nick', 'mail', 'link'];
-        var guest_info = 'nick,mail,link'.split(',').filter(function (item) {
-            return GUEST_INFO.indexOf(item) > -1
-        });
-        var recordIP = JSON.parse('true');
-        var highlight = JSON.parse('true');
-
-        new Valine({
-            el: '.vcomment',
-            appId: "qSGgNVy2qdAQpMrpJ55ZWYq8-gzGzoHsz",
-            appKey: "31DwJuzW1dISx9Gbu9VKJJaV",
-            placeholder: "Just go go",
-            pageSize: '10',
-            avatar: 'mp',
-            lang: 'zh-cn',
-            recordIP: recordIP,
-            highlight: highlight
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-    
-<script src="https://unpkg.com/algoliasearch@4.17.1/dist/algoliasearch-lite.umd.js"></script>
-
-    
-<script src="https://unpkg.com/instantsearch.js@4.56.1/dist/instantsearch.production.min.js"></script>
-
-    
-<script src="/js/search.js"></script>
-
-    <script>
-        var CONFIG = {
-            root: '/',
-            algolia: {
-                applicationID: "I5AGYRKT2W",
-                apiKey: "17881bfbc204248ec24a91f3c030320e",
-                indexName: "Belinra",
-                hits: {
-                    "per_page": parseInt("10")
-                },
-                labels: {
-                    "input_placeholder": "搜索.....",
-                    "hits_empty": "未发现与 「${query}」相关内容",
-                    "hits_stats": "找到${hits}条结果（用时 ${time} ms）"
-                }
-            }
-        };
-    </script>
-
-
-    </div>
-    <div class="site-search">
-        <div class="algolia-popup popup">
-            <div class="algolia-search">
-                <span class="algolia-search-input-icon"></span>
-                <div class="algolia-search-input" id="algolia-search-input"></div>
-            </div>
-
-            <div class="algolia-results">
-                <div id="algolia-stats"></div>
-                <div id="algolia-hits"></div>
-                <div id="algolia-pagination" class="algolia-pagination"></div>
-            </div>
-
-            <span class="popup-btn-close"></span>
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Belinra的后花园（这里没有僵尸）"></span>
+          
         </div>
-    </div>
-    <!-- hexo injector body_end start -->
-<script src="/js/insertHighlight.js"></script>
-<!-- hexo injector body_end end --></body>
-    </html>
 
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/07/20/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" target="_self">
+          测试文章
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/20/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" target="_self">
+        <div>
+          这是一篇测试文章
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-20 15:41" pubdate>
+              2023-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E5%88%9B/">#原创</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
