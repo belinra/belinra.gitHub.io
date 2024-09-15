@@ -207,7 +207,152 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <p>信号与系统中信号性质的判断</p>
+            <p>在系统理论中，判断一个系统是否具备线性、时不变性、因果性、稳定性和记忆性等性质是分析和设计系统的基础。下面将详细说明每种性质的定义以及相应的判断方法。</p>
+<h2 id="1-线性（Linearity）"><a href="#1-线性（Linearity）" class="headerlink" title="1. 线性（Linearity）"></a>1. 线性（Linearity）</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>线性系统满足叠加原理，即对于任意输入信号 <script type="math/tex">x_1(t)</script> 和 <script type="math/tex">x_2(t)</script>，以及任意常数 <script type="math/tex">a</script> 和 <script type="math/tex">b</script>，系统的响应满足：</p>
+<script type="math/tex; mode=display">
+S[a x_1(t) + b x_2(t)] = a S[x_1(t)] + b S[x_2(t)]</script><h3 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h3><p>要判断系统是否线性，可以通过验证叠加原理是否成立。具体步骤包括：</p>
+<ol>
+<li><p><strong>齐次性（比例性）</strong>：</p>
+<ul>
+<li>对于任意输入信号 <script type="math/tex">x(t)</script> 和任意常数 <script type="math/tex">a</script>，验证：<script type="math/tex; mode=display">
+S[a x(t)] = a S[x(t)]</script></li>
+<li>如果等式成立，系统满足齐次性。</li>
+</ul>
+</li>
+<li><p><strong>叠加性</strong>：</p>
+<ul>
+<li>对于任意两个输入信号 <script type="math/tex">x_1(t)</script> 和 <script type="math/tex">x_2(t)</script>，验证：<script type="math/tex; mode=display">
+S[x_1(t) + x_2(t)] = S[x_1(t)] + S[x_2(t)]</script></li>
+<li>如果等式成立，系统满足叠加性。</li>
+</ul>
+</li>
+</ol>
+<p>如果系统同时满足齐次性和叠加性，则系统是线性的。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设系统的输入输出关系为 <script type="math/tex">y(t) = 2x(t)</script>。验证线性：</p>
+<ul>
+<li><p>齐次性：</p>
+<script type="math/tex; mode=display">
+S[a x(t)] = 2(a x(t)) = a (2x(t)) = a S[x(t)]</script></li>
+<li><p>叠加性：</p>
+<script type="math/tex; mode=display">
+S[x_1(t) + x_2(t)] = 2(x_1(t) + x_2(t)) = 2x_1(t) + 2x_2(t) = S[x_1(t)] + S[x_2(t)]</script></li>
+</ul>
+<p>因此，该系统是线性的。</p>
+<h2 id="2-时不变性（Time-Invariance）"><a href="#2-时不变性（Time-Invariance）" class="headerlink" title="2. 时不变性（Time-Invariance）"></a>2. 时不变性（Time-Invariance）</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>时不变系统的特性不随时间的推移而改变。即，如果输入信号延迟 <script type="math/tex">t_0</script> 后，系统的输出也延迟 <script type="math/tex">t_0</script> ，则系统是时不变的。数学表达为：</p>
+<script type="math/tex; mode=display">
+S[x(t - t_0)] = y(t - t_0)</script><h3 id="判断方法-1"><a href="#判断方法-1" class="headerlink" title="判断方法"></a>判断方法</h3><p>要判断系统是否时不变，可以进行以下步骤：</p>
+<ol>
+<li><p><strong>输入延迟</strong>：</p>
+<ul>
+<li>对输入信号 <script type="math/tex">x(t)</script> 延迟 <script type="math/tex">t_0</script>，得到 <script type="math/tex">x(t - t_0)</script>。</li>
+</ul>
+</li>
+<li><p><strong>系统响应</strong>：</p>
+<ul>
+<li>计算系统对延迟后的输入信号的响应 <script type="math/tex">S[x(t - t_0)]</script>。</li>
+</ul>
+</li>
+<li><p><strong>输出延迟</strong>：</p>
+<ul>
+<li>将原始输出 <script type="math/tex">y(t) = S[x(t)]</script> 延迟 <script type="math/tex">t_0</script>，得到 <script type="math/tex">y(t - t_0)</script>。</li>
+</ul>
+</li>
+<li><p><strong>比较</strong>：</p>
+<ul>
+<li>判断 <script type="math/tex">S[x(t - t_0)]</script> 是否等于 <script type="math/tex">y(t - t_0)</script>。</li>
+</ul>
+</li>
+</ol>
+<p>如果对所有 <script type="math/tex">t_0</script> 均成立，则系统是时不变的；否则，系统是时变的。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>考虑系统 <script type="math/tex">y(t) = x(t) + t</script>：</p>
+<ul>
+<li><p>输入延迟后：</p>
+<script type="math/tex; mode=display">
+S[x(t - t_0)] = x(t - t_0) + t</script></li>
+<li><p>输出延迟：</p>
+<script type="math/tex; mode=display">
+y(t - t_0) = x(t - t_0) + (t - t_0)</script></li>
+</ul>
+<p>显然 <script type="math/tex">S[x(t - t_0)] \neq y(t - t_0)</script>，因此该系统是时变的。</p>
+<h2 id="3-因果性（Causality）"><a href="#3-因果性（Causality）" class="headerlink" title="3. 因果性（Causality）"></a>3. 因果性（Causality）</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>因果系统的输出在任意时刻 <script type="math/tex">t</script> 仅依赖于当前及过去的输入值，即 <script type="math/tex">y(t)</script> 不依赖于未来的 <script type="math/tex">x(t')</script>（<script type="math/tex">t' > t</script>）。</p>
+<h3 id="判断方法-2"><a href="#判断方法-2" class="headerlink" title="判断方法"></a>判断方法</h3><p>要判断系统是否因果，可以分析系统的输入输出关系，具体方法包括：</p>
+<ol>
+<li><p><strong>系统方程分析</strong>：</p>
+<ul>
+<li>如果系统的输出 <script type="math/tex">y(t)</script> 仅由 <script type="math/tex">x(\tau)</script>（<script type="math/tex">\tau \leq t</script>）决定，则系统是因果的。</li>
+</ul>
+</li>
+<li><p><strong>脉冲响应</strong>：</p>
+<ul>
+<li>对于线性时不变系统，检查脉冲响应 <script type="math/tex">h(t)</script>。如果 <script type="math/tex">h(t) = 0</script> 对于所有 <script type="math/tex">t < 0</script>，则系统是因果的。</li>
+</ul>
+</li>
+<li><p><strong>系统分类</strong>：</p>
+<ul>
+<li>实时系统通常是因果的，而预测系统通常是非因果的。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>考虑系统 <script type="math/tex">y(t) = x(t) + x(t - 1)</script>：</p>
+<ul>
+<li>输出 <script type="math/tex">y(t)</script> 仅依赖于当前 <script type="math/tex">x(t)</script> 和过去 <script type="math/tex">x(t - 1)</script> 的值。</li>
+<li>因此，该系统是因果的。</li>
+</ul>
+<p>相反，系统 <script type="math/tex">y(t) = x(t + 1)</script> 依赖于未来的输入，故为非因果系统。</p>
+<h2 id="4-稳定性（Stability）"><a href="#4-稳定性（Stability）" class="headerlink" title="4. 稳定性（Stability）"></a>4. 稳定性（Stability）</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>在系统理论中，通常讨论 BIBO 稳定性（Bounded Input, Bounded Output）。即对于所有有界输入 <script type="math/tex">|x(t)| \leq M_x</script>，系统的输出也有界 <script type="math/tex">|y(t)| \leq M_y</script>。</p>
+<h3 id="判断方法-3"><a href="#判断方法-3" class="headerlink" title="判断方法"></a>判断方法</h3><p>判断系统是否 BIBO 稳定的方法包括：</p>
+<ol>
+<li><p><strong>脉冲响应</strong>：</p>
+<ul>
+<li>对于线性时不变系统，若脉冲响应 <script type="math/tex">h(t)</script> 满足 <script type="math/tex">\int_{-\infty}^{\infty} |h(t)| dt < \infty</script>，则系统是 BIBO 稳定的。</li>
+</ul>
+</li>
+<li><p><strong>系统方程</strong>：</p>
+<ul>
+<li>分析系统的输入输出关系，确保输出不会因为输入的有界性而发散。</li>
+</ul>
+</li>
+<li><p><strong>极点分析</strong>（针对差分方程或传递函数）：</p>
+<ul>
+<li>检查系统的极点位置，确保所有极点位于单位圆内（离散系统）或左半平面（连续系统）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>对于系统 <script type="math/tex">y(t) = \int_{-\infty}^{t} e^{-(t - \tau)} x(\tau) d\tau</script>：</p>
+<ul>
+<li>脉冲响应 <script type="math/tex">h(t) = e^{-t}u(t)</script>（其中 <script type="math/tex">u(t)</script> 为单位阶跃函数）。</li>
+<li><script type="math/tex; mode=display">
+\int_{-\infty}^{\infty} |h(t)| dt = \int_{0}^{\infty} e^{-t} dt = 1 < \infty</script></li>
+<li>因此，该系统是 BIBO 稳定的。</li>
+</ul>
+<h2 id="5-记忆性（Memory）"><a href="#5-记忆性（Memory）" class="headerlink" title="5. 记忆性（Memory）"></a>5. 记忆性（Memory）</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p>记忆性指系统的输出是否仅依赖于当前输入值。若系统的输出 <script type="math/tex">y(t)</script> 仅由 <script type="math/tex">x(t)</script> 决定，则称系统无记忆（memoryless）；否则，系统有记忆（memory）。</p>
+<h3 id="判断方法-4"><a href="#判断方法-4" class="headerlink" title="判断方法"></a>判断方法</h3><p>要判断系统是否有记忆，可以分析系统的输入输出关系：</p>
+<ol>
+<li><p><strong>系统方程</strong>：</p>
+<ul>
+<li>若 <script type="math/tex">y(t)</script> 仅与 <script type="math/tex">x(t)</script> 有关，则系统无记忆。</li>
+<li>若 <script type="math/tex">y(t)</script> 依赖于 <script type="math/tex">x(t')</script> （<script type="math/tex">t' \neq t</script>），则系统有记忆。</li>
+</ul>
+</li>
+<li><p><strong>脉冲响应</strong>：</p>
+<ul>
+<li>对于线性时不变系统，若脉冲响应 <script type="math/tex">h(t)</script> 是一个冲激函数 <script type="math/tex">h(t) = k\delta(t)</script>，则系统无记忆。</li>
+<li>否则，系统有记忆。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h3><ul>
+<li><p>系统 <script type="math/tex">y(t) = 3x(t)</script>：</p>
+<ul>
+<li>输出仅依赖于当前输入，系统无记忆。</li>
+</ul>
+</li>
+<li><p>系统 <script type="math/tex">y(t) = x(t) + x(t - 1)</script>：</p>
+<ul>
+<li>输出依赖于当前和过去的输入，系统有记忆。</li>
+</ul>
+</li>
+</ul>
 
             
         </div>
