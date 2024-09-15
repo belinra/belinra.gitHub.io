@@ -30,7 +30,7 @@
 <script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
 <link
     rel="stylesheet"
-    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css"
 />
 <script src="/js/lib/highlight.js"></script>
 
@@ -46,8 +46,19 @@
 
 <link rel="stylesheet" href="/css/main.css" />
 
+    <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+<script src="/js/background.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css">
+<script src="/js/cursor.min.js"></script>
+
+
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
+   
     <div id="layout">
         <transition name="fade">
             <div id="loading" v-show="loading">
@@ -182,21 +193,21 @@
             </div>
         </div>
         
-        <div class="timeline" data-title="性质的判断">
+        <div class="timeline" data-title="信号的五个性质的判断">
             <div class="timeline-tail"></div>
             <div class="timeline-content">
                 <div class="item-time">2024/9/15</div>
                 <a href="/2024/09/15/2024-%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F-1-%E6%80%A7%E8%B4%A8%E7%9A%84%E5%88%A4%E6%96%AD/">
-                    <h3>性质的判断</h3>
+                    <h3>信号的五个性质的判断</h3>
                 </a>
                 <div class="info">
                     
                     <span class="category">
-                        <a href="/categories/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F/">
+                        <a href="/categories/%E5%A4%A7%E5%AD%A6%E5%AD%A6%E4%B9%A0/">
                             <span class="icon">
                                 <i class="fa-solid fa-bookmark fa-fw"></i>
                             </span>
-                            信号与系统
+                            大学学习
                         </a>
                     </span>
                     
@@ -235,6 +246,18 @@
         </transition>
         
     </div>
+    <canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+
     <script src="/js/main.js"></script>
     
 </body>
