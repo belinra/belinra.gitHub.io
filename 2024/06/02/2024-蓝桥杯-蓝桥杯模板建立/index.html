@@ -30,7 +30,7 @@
 <script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
 <link
     rel="stylesheet"
-    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/rainbow.min.css"
 />
 <script src="/js/lib/highlight.js"></script>
 
@@ -201,7 +201,7 @@
 <p>这两个仓库可以删除后面的东西（一直删除到master，可以看到我的全部的东西）</p>
 <p>Github的仓库为 <a target="_blank" rel="noopener" href="https://github.com/zuoliangyu/lanqiaobei_study/tree/master/模板/demo_zuolan">lanqiaobei_study/模板/demo_zuolan at master · zuoliangyu/lanqiaobei_study (github.com)</a><br>Gitee的仓库为 <a target="_blank" rel="noopener" href="https://gitee.com/zuo-lan/blue-bridge-cup-learning/tree/master/模板/demo_zuolan">模板/demo_zuolan · zuoliangyu/蓝桥杯学习 - 码云 - 开源中国 (gitee.com)</a></p>
 <h3 id="锁存器与三八译码器介绍"><a href="#锁存器与三八译码器介绍" class="headerlink" title="锁存器与三八译码器介绍"></a>锁存器与三八译码器介绍</h3><p>这里我们需要有一个基础知识，就是我们的锁存器和三八译码器介绍，这是一个比较关键的点，我们看到下面这两个图，可以看到我们的锁存器是用P25，P26，P27进行控制，即P2的高三位进行的控制，我们只需要按照如下的命令进行书写即可。</p>
-<pre><code class="lang-c">
+<pre><code class="c">
 P2 = P2 &amp; 0x1f | 0x?0;
 P2 &amp;= 0x1f;
 </code></pre>
@@ -214,13 +214,13 @@ P2 &amp;= 0x1f;
 </blockquote>
 <h4 id="Led底层"><a href="#Led底层" class="headerlink" title="Led底层"></a>Led底层</h4><p>我们可以看到Led的代码，我们可以注意到的是，这个地方使用了static这个关键词，因为我们需要关注内存的使用<del>（这里不得不提C51的垃圾内存容量）</del>，所以我们将其变为函数静态内存，可以有效节省。</p>
 <p>传入的参数有两个，一个是addr，代表我们需要控制的Led的地址，（0-7）对应了（L1-L8），另一个是enable，用于控制选中的Led灯的亮灭。</p>
-<pre><code class="lang-c">void Led_Disp(unsigned char addr, unsigned char enable)
+<pre><code class="c">void Led_Disp(unsigned char addr, unsigned char enable)
 </code></pre>
 <p>我们定义了两个参数，一个是temp，一个是temp_old，你们可能会好奇，为什么我要在这里用两个变量来进行编写，明明逻辑上只需要用一个变量对P0进行赋值就行了，这里我说明一下，我们一般情况下不会一直操控锁存器，否则有概率影响数码管的显示，当我们状况出现变化（temp!=temp_old）的时候，我们才对锁存器P2的高三位进行书写。当我们需要点亮的时候，就让相应的addr变为1；当我们需要熄灭的时候就让相应的addr变为0；</p>
 <blockquote>
 <p>这里你可能会有疑问，因为我们在原理图上面如果想让Led亮，那么应该给0，这里做一个说明，我们后面会直接取反，这里用1是为了符合我们的直觉<del>（因为正常人就是1亮0灭）</del></p>
 </blockquote>
-<pre><code class="lang-c">static unsigned char temp = 0x00;
+<pre><code class="c">static unsigned char temp = 0x00;
 static unsigned char temp_old = 0xff;
 if (enable)
     temp |= 0x01 &lt;&lt; addr;
@@ -229,7 +229,7 @@ else
 </code></pre>
 <p><img src="https://s2.loli.net/2024/06/07/WA8vzFcHU1reiSg.png" alt="image-20240603102116772"></p>
 <p>我们通过查看原理图可以看到，用于控制的Load为Y4C，我们通过计算二进制可以发现结果为1000_0000，即0x80，所以我们在这里代码中的P2设置为P2 = P2 &amp; 0x1f | 0x80;在运行后别忘记使用P2 &amp;= 0x1f来进行高位清零，但是在我们操作P2锁存器之前，我们需要先对P0进行赋值（要记得先取反）</p>
-<pre><code class="lang-c">if (temp != temp_old) &#123;
+<pre><code class="c">if (temp != temp_old) &#123;
     P0 = ~temp;
     P2 = P2 &amp; 0x1f | 0x80;
     P2 &amp;= 0x1f;
@@ -237,7 +237,7 @@ else
 &#125;
 </code></pre>
 <p>完整代码如下</p>
-<pre><code class="lang-c">    /// @brief Led扫描
+<pre><code class="c">    /// @brief Led扫描
     /// @param addr 需要控制的Led的地址（0-7）
     /// @param enable 控制该地址的Led是否点亮
     void Led_Disp(unsigned char addr, unsigned char enable) &#123;
@@ -256,7 +256,7 @@ else
     &#125;
 </code></pre>
 <h4 id="蜂鸣器，继电器，MOTOR底层"><a href="#蜂鸣器，继电器，MOTOR底层" class="headerlink" title="蜂鸣器，继电器，MOTOR底层"></a>蜂鸣器，继电器，MOTOR底层</h4><p>这里我就一起讲了，因为他们三是一个芯片的不同输出，和上方的Led类似，但是这几个需要一个全局变量（在函数外申明）</p>
-<pre><code class="lang-c">unsigned char temp_0 = 0x00;
+<pre><code class="c">unsigned char temp_0 = 0x00;
 unsigned char temp_old_0 = 0xff;
 </code></pre>
 <p>我们可以看到，BUZZ、MOTOR、RELAY为一个芯片的不同位的输出</p>
@@ -264,7 +264,7 @@ unsigned char temp_old_0 = 0xff;
 <p>MOTOR对应I6-&gt;Q5-&gt;D5-&gt;0010_0000-&gt;0x20</p>
 <p>BUZZ对应I7-&gt;Q6-&gt;D6-&gt;0100_0000-&gt;0x80</p>
 <p>这里后我们就知道如果我们需要对应的工作，那么就要给P0赋相应的值，并且下方的Y5C也告诉我们，我们需要给锁存器为1010_0000-&gt;0xa0,即P2 = P2 &amp; 0x1f | 0xa0;这个之后也别忘了使用P2 &amp;= 0x1f来进行高位清零。</p>
-<pre><code class="lang-c">  if (temp_0 != temp_old_0) &#123;
+<pre><code class="c">  if (temp_0 != temp_old_0) &#123;
     P0 = temp_0;
     P2 = P2 &amp; 0x1f | 0xa0;
     P2 &amp;= 0x1f;
@@ -273,7 +273,7 @@ unsigned char temp_old_0 = 0xff;
 </code></pre>
 <p><img src="https://s2.loli.net/2024/06/07/jnKlC8sbGtIVH3q.png" alt="image-20240603110637349"></p>
 <p>总体代码如下</p>
-<pre><code class="lang-c">unsigned char temp_0 = 0x00;
+<pre><code class="c">unsigned char temp_0 = 0x00;
 unsigned char temp_old_0 = 0xff;
 /// @brief 蜂鸣器控制
 /// @param enable
@@ -319,14 +319,14 @@ void MOTOR(bit enable) &#123;
 &#125;
 </code></pre>
 <h3 id="Led-h"><a href="#Led-h" class="headerlink" title="Led.h"></a>Led.h</h3><p>申明代码如下</p>
-<pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 void Led_Disp(unsigned char addr, unsigned char enable);
 void Beep(bit enable);
 void Relay(bit enable);
 void MOTOR(bit enable);
 </code></pre>
 <h2 id="Key模版建立"><a href="#Key模版建立" class="headerlink" title="Key模版建立"></a>Key模版建立</h2><h3 id="key-c"><a href="#key-c" class="headerlink" title="key.c"></a>key.c</h3><h4 id="基础代码"><a href="#基础代码" class="headerlink" title="基础代码"></a>基础代码</h4><p>在这里我们可以看到原理图里面的行列显示，最新版的原理图把row和col单独拿出来了，所以可能对应有点麻烦<del>（其实也不麻烦）</del>，如下图所示，我们直接按照一列一列进行扫描，给列低电平后判断指定行是否为低电平，如果指定行为低电平，那么我们就认为这个按键被按下。并且我们在这里不需要实现消抖等操作，我们会在main.c里面实现我们的功能，这里只实现最基础的扫描。</p>
-<pre><code class="lang-c">P44 = 0;P42 = 1;P35 = 1;P34 = 1;
+<pre><code class="c">P44 = 0;P42 = 1;P35 = 1;P34 = 1;
 if (P33 == 0) temp = 4;
 if (P32 == 0) temp = 5;
 if (P31 == 0) temp = 6;
@@ -353,16 +353,16 @@ if (P30 == 0) temp = 19;
 <p><img src="https://s2.loli.net/2024/06/07/6sCohX7PLWTDuYQ.png" alt="image-20240603112443055"></p>
 <p><img src="https://s2.loli.net/2024/06/07/iKbUM1lzuIsaZYk.png" alt="image-20240603112417611"></p>
 <p>在我们把行列扫描写完后就可以完成工作了，但是，我们要注意一个问题，局部变量一定要注意初始化为0</p>
-<pre><code class="lang-c">unsigned char temp = 0;
+<pre><code class="c">unsigned char temp = 0;
 </code></pre>
 <h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>在这里要注意一个问题，我们的串口进行发送的时候会占用P30和P31口，这个是硬件的冲突，所以我们在进入这个扫描函数的时候，需要对其关掉轮询（就是在main函数里面用的什么来进行各个函数定时的定时器，叫做轮询定时器）。这里我用的是定时器1，所以我进入后就要使用ET1=0关掉，结束后用P3=0xff；ET1=1开启。</p>
-<pre><code class="lang-c">ET1 = 0;
+<pre><code class="c">ET1 = 0;
 ----
 P3 = 0xff;
 ET1 = 1;
 </code></pre>
 <p>还有一个比较重要的问题，今年（2024）不管是省赛还是国赛都考了ne555的测量，我们ne555的测量要用到P34引脚，也就是我们的按键的最后一列，那么这里就要注意一下，这是一个硬件冲突，且无法解决，所以我们将所有P34删除，就当我们用的按键为4行3列</p>
-<pre><code class="lang-c">P44 = 0;P42 = 1;P35 = 1;
+<pre><code class="c">P44 = 0;P42 = 1;P35 = 1;
 if (P33 == 0) temp = 4;
 if (P32 == 0) temp = 5;
 if (P31 == 0) temp = 6;
@@ -381,7 +381,7 @@ if (P31 == 0) temp = 14;
 if (P30 == 0) temp = 15;
 </code></pre>
 <p>整体代码如下（没有包括ne555，如果有ne555需要把按键扫描换成上面的）</p>
-<pre><code class="lang-c">#include &quot;key.h&quot;
+<pre><code class="c">#include &quot;key.h&quot;
 unsigned char Key_Read() &#123;
   unsigned char temp = 0;
   ET1 = 0;
@@ -415,7 +415,7 @@ unsigned char Key_Read() &#123;
   return temp;
 &#125;
 </code></pre>
-<h3 id="key-h"><a href="#key-h" class="headerlink" title="key.h"></a>key.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="key-h"><a href="#key-h" class="headerlink" title="key.h"></a>key.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 unsigned char Key_Read();
 </code></pre>
 <h2 id="数码管模板建立"><a href="#数码管模板建立" class="headerlink" title="数码管模板建立"></a>数码管模板建立</h2><h3 id="Seg-c"><a href="#Seg-c" class="headerlink" title="Seg.c"></a>Seg.c</h3><h4 id="数码管编码推导"><a href="#数码管编码推导" class="headerlink" title="数码管编码推导"></a>数码管编码推导</h4><p>这里我单独开一个标题来做数码管的编码推导，因为这个很重要，我们看到下方的截图</p>
@@ -424,7 +424,7 @@ unsigned char Key_Read();
 <p><img src="https://s2.loli.net/2024/06/07/S2l5KnEXQ8ydmMa.png" alt="image-20240603115210566"></p>
 <p>我们标好后按照dp-&gt;g-&gt;…-&gt;a的顺序写出，即1010_0100-&gt;0xa4，这个值在数码管的显示中就代表着“2”</p>
 <p>所以我们就可以根据这个规律来编写一个段选表</p>
-<pre><code class="lang-c">code unsigned char seg_dula[] = &#123;0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92,
+<pre><code class="c">code unsigned char seg_dula[] = &#123;0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92,
                                  0x82, 0xf8, 0x80, 0x90, 0xff, 0x88&#125;;
 </code></pre>
 <h4 id="数码管代码编写"><a href="#数码管代码编写" class="headerlink" title="数码管代码编写"></a>数码管代码编写</h4><p>这是我们最最重要的玩意，因为这个涉及到我们的显示，我们看原理图可以看到，我们需要对数码管进行位选（选择哪一个数码管进行显示），段选（选择数码管显示的数据）。</p>
@@ -432,26 +432,26 @@ unsigned char Key_Read();
 <p>我们需要先对P0进行段选显示后，使用P2将锁存器打开（Y7C-&gt;1110_0000-&gt;0xe0）;在对P0进行位选配置后，使用P2将锁存器打开（Y6C-&gt;1100_0000-&gt;0xc0）</p>
 <p><img src="https://s2.loli.net/2024/06/07/4RgTfMqvehCXWNi.png" alt="image-20240603113818447"></p>
 <p>经过我们的分析后我们就可以知道我们需要传入的数据为wela位选，dula段选，point是否显示小数点</p>
-<pre><code class="lang-c">void Seg_Disp(unsigned char wela, unsigned char dula, unsigned char point)
+<pre><code class="c">void Seg_Disp(unsigned char wela, unsigned char dula, unsigned char point)
 </code></pre>
 <p>我们为了避免闪烁，所以我们需要先对数码管进行消隐，即</p>
-<pre><code class="lang-c">P0 = 0xff;
+<pre><code class="c">P0 = 0xff;
 P2 = P2 &amp; 0x1f | 0xe0;
 P2 &amp;= 0x1f;
 </code></pre>
 <p>然后我们对位置进行选择后使用P2打开相应锁存器</p>
-<pre><code class="lang-c">P0 = 0x01 &lt;&lt; wela;
+<pre><code class="c">P0 = 0x01 &lt;&lt; wela;
 P2 = P2 &amp; 0x1f | 0xc0;
 P2 &amp;= 0x1f;
 </code></pre>
 <p>由于我们可以知道，要显示小数点的话，我们就要让DP为0，其他不变，即&amp;0x7f即可完成</p>
-<pre><code class="lang-c">P0 = seg_dula[dula];
+<pre><code class="c">P0 = seg_dula[dula];
 if (point) P0 &amp;= 0x7f;
 P2 = P2 &amp; 0x1f | 0xe0;
 P2 &amp;= 0x1f;
 </code></pre>
 <p>总体代码如下</p>
-<pre><code class="lang-c">#include &quot;seg.h&quot;
+<pre><code class="c">#include &quot;seg.h&quot;
 // 0-9 灭
 //  A
 code unsigned char seg_dula[] = &#123;0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92,
@@ -474,11 +474,11 @@ void Seg_Disp(unsigned char wela, unsigned char dula, unsigned char point) &#123
   P2 &amp;= 0x1f;
 &#125;
 </code></pre>
-<h3 id="Seg-h"><a href="#Seg-h" class="headerlink" title="Seg.h"></a>Seg.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="Seg-h"><a href="#Seg-h" class="headerlink" title="Seg.h"></a>Seg.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 void Seg_Disp(unsigned char wela, unsigned char dula, unsigned char point);
 </code></pre>
 <h2 id="Ds1302时钟模版建立"><a href="#Ds1302时钟模版建立" class="headerlink" title="Ds1302时钟模版建立"></a>Ds1302时钟模版建立</h2><h3 id="Ds1302-c"><a href="#Ds1302-c" class="headerlink" title="Ds1302.c"></a>Ds1302.c</h3><p>这里有官方提供的参考代码，所以我们上面的时序可以不用书写，我们直接对下方的时间读取/写入进行操作</p>
-<h4 id="官方的参考代码"><a href="#官方的参考代码" class="headerlink" title="官方的参考代码"></a>官方的参考代码</h4><pre><code class="lang-c">/*    #     DS1302代码片段说明
+<h4 id="官方的参考代码"><a href="#官方的参考代码" class="headerlink" title="官方的参考代码"></a>官方的参考代码</h4><pre><code class="c">/*    #     DS1302代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -539,7 +539,7 @@ unsigned char Read_Ds1302_Byte(unsigned char address) &#123;
 </code></pre>
 <h4 id="我们需要补充的代码"><a href="#我们需要补充的代码" class="headerlink" title="我们需要补充的代码"></a>我们需要补充的代码</h4><p>首先是我们需要绑定SDA，RST，SCK的引脚，在原理图中可以看到，并且要注意一个问题，我们用到了NOP函数，所以需要引入头文件intrins.h</p>
 <p><img src="https://s2.loli.net/2024/06/07/ZViOBuWyY8oSKMD.png" alt="image-20240603120352094"></p>
-<pre><code class="lang-c">#include &quot;intrins.h&quot;
+<pre><code class="c">#include &quot;intrins.h&quot;
 sbit SDA = P2 ^ 3;
 sbit RST = P1 ^ 3;
 sbit SCK = P1 ^ 7;
@@ -549,16 +549,16 @@ sbit SCK = P1 ^ 7;
 <p>我们如果需要读取时钟的话，只需要读取地址0x85-&gt;小时 0x83-&gt;分钟 0x81-&gt;秒钟</p>
 <p>我们如果需要写入时钟的话，需要先将0x8E位置的最高位WP置0，解除写保护后才能进行写入，写入的地址为0x84-&gt;小时 0x82-&gt;分钟 0x80-&gt;秒钟</p>
 <p>所以我们的代码编写就很简单了,我们传入数据为数组的指针</p>
-<pre><code class="lang-c">void Set_Rtc(unsigned char *ucRtc) 
+<pre><code class="c">void Set_Rtc(unsigned char *ucRtc) 
 void Read_Rtc(unsigned char *ucRtc)
 </code></pre>
 <p>这里给一个调用的示例</p>
-<pre><code class="lang-c">unsigned char time[3] = &#123;11,12,13&#125;;//11:12:13
+<pre><code class="c">unsigned char time[3] = &#123;11,12,13&#125;;//11:12:13
 Set_Rtc(time);
 Read_Rtc(time);
 </code></pre>
 <p>我们在写入之前需要进行解锁写保护，写完后就进行写保护</p>
-<pre><code class="lang-c">Write_Ds1302_Byte(0x8e, 0x00);
+<pre><code class="c">Write_Ds1302_Byte(0x8e, 0x00);
 -----
 Write_Ds1302_Byte(0x8e, 0x80);
 </code></pre>
@@ -566,14 +566,14 @@ Write_Ds1302_Byte(0x8e, 0x80);
 <p>举个🌰，我们假设要写入的时间为23:59:58，那么我们实际上要写入芯片的数据为0x23 0x59 0x58</p>
 <p>但是我们为了方便（因为有时候需要我们是设置时钟，加减的那种，直接使用bcd码不方便，需要我们判断是否达到0xa0然后进行转换），这里我们可以在里面写一个十进制转为十进制bcd码的公式就行，以写入0x23为例，我们输入给我们Set_Rtc函数的数据为23，我们要先将其转换为0x23才能进行写入，那么我们可以观察一下，本质上就是把十位和个位分开，然后再存入即可，我们分开很简单，直接/10和%10就可以取出十位和个位，然后再使用&lt;&lt;4来进行高位移位，将我们的十位移动到高四位去，然后|上我们的个位（低四位）就可以将其拼接完成。</p>
 <p>23-&gt;2,3-&gt;0010,0011-&gt;0100_0011</p>
-<pre><code class="lang-c">temp = ucRtc[i] / 10 &lt;&lt; 4 | ucRtc[i] % 10;
+<pre><code class="c">temp = ucRtc[i] / 10 &lt;&lt; 4 | ucRtc[i] % 10;
 </code></pre>
 <p>同理，我们读取的时候读取到的都是十进制的bcd码，那么我们将其转换后再读出</p>
 <p>0x23-&gt;0x2,0x3-&gt;2*10+3-&gt;23</p>
-<pre><code class="lang-c">ucRtc[i] = temp &gt;&gt; 4 * 10 + temp &amp; 0x0f;
+<pre><code class="c">ucRtc[i] = temp &gt;&gt; 4 * 10 + temp &amp; 0x0f;
 </code></pre>
 <p>读取和写入的代码如下</p>
-<pre><code class="lang-c">//写入 
+<pre><code class="c">//写入 
 for (i = 0; i &lt; 3; i++) &#123;
     temp = ucRtc[i] / 10 &lt;&lt; 4 | ucRtc[i] % 10;
     Write_Ds1302_Byte(0x84 - 2 * i, temp);
@@ -585,7 +585,7 @@ for (i = 0; i &lt; 3; i++) &#123;
 &#125;
 </code></pre>
 <p>需要补充的完整代码</p>
-<pre><code class="lang-c">// 十进制 11 -&gt; 0x11
+<pre><code class="c">// 十进制 11 -&gt; 0x11
 void Set_Rtc(unsigned char *ucRtc) &#123;
   unsigned char i;
   unsigned char temp;
@@ -607,7 +607,7 @@ void Read_Rtc(unsigned char *ucRtc) &#123;
 &#125;
 </code></pre>
 <p>完整代码</p>
-<pre><code class="lang-c">/*    #     DS1302代码片段说明
+<pre><code class="c">/*    #     DS1302代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -692,12 +692,12 @@ void Read_Rtc(unsigned char *ucRtc) &#123;
   &#125;
 &#125;
 </code></pre>
-<h3 id="Ds1302-h"><a href="#Ds1302-h" class="headerlink" title="Ds1302.h"></a>Ds1302.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="Ds1302-h"><a href="#Ds1302-h" class="headerlink" title="Ds1302.h"></a>Ds1302.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 void Set_Rtc(unsigned char *ucRtc);
 void Read_Rtc(unsigned char *ucRtc);
 </code></pre>
 <h2 id="Onewire温度模版建立"><a href="#Onewire温度模版建立" class="headerlink" title="Onewire温度模版建立"></a>Onewire温度模版建立</h2><h3 id="Onewire-c"><a href="#Onewire-c" class="headerlink" title="Onewire.c"></a>Onewire.c</h3><h4 id="官方的参考代码-1"><a href="#官方的参考代码-1" class="headerlink" title="官方的参考代码"></a>官方的参考代码</h4><p>这里有官方提供的参考代码，所以我们上面的时序可以不用书写，我们直接对下方的进行温度读取操作。</p>
-<pre><code class="lang-c">/*    #     单总线代码片段说明
+<pre><code class="c">/*    #     单总线代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -759,7 +759,7 @@ bit init_ds18b20(void) &#123;
 </code></pre>
 <h4 id="我们需要补充的代码-1"><a href="#我们需要补充的代码-1" class="headerlink" title="我们需要补充的代码"></a>我们需要补充的代码</h4><p>首先是我们需要绑定DQ的引脚，在原理图中可以看到</p>
 <p><img src="https://s2.loli.net/2024/06/07/ZRTvchqmNoHJkyz.png" alt="image-20240603151248313"></p>
-<pre><code class="lang-c">sbit DQ = P1 ^ 4;
+<pre><code class="c">sbit DQ = P1 ^ 4;
 </code></pre>
 <p>我们不需要管上方的时序的书写，只需要进行温度读取的代码书写就行，</p>
 <p>下方是温度芯片的使用顺序（官方手册），首先我们需要运行init，然后再检查rom（可跳过），最后执行我们的功能函数，注意，一次只能使用一个功能。</p>
@@ -772,7 +772,7 @@ bit init_ds18b20(void) &#123;
 <p><img src="https://s2.loli.net/2024/06/07/IeSagVktWAXzcy5.png" alt="image-20240603152557565"></p>
 <p>精度为9-&gt;0.5;10-&gt;0.25;11-&gt;0.125;12（默认）-&gt;0.0625</p>
 <p>我们就可以根据上面的描述来进行代码书写</p>
-<pre><code class="lang-c">float rd_temperature() &#123;
+<pre><code class="c">float rd_temperature() &#123;
     unsigned char low, high;
     //开启温度转换
     init_ds18b20();
@@ -789,10 +789,10 @@ bit init_ds18b20(void) &#123;
 &#125;
 </code></pre>
 <p>这里给一个调用示例</p>
-<pre><code class="lang-c">float temp = rd_temperature();
+<pre><code class="c">float temp = rd_temperature();
 </code></pre>
 <p>完整代码如下</p>
-<pre><code class="lang-c">/*    #     单总线代码片段说明
+<pre><code class="c">/*    #     单总线代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -869,11 +869,11 @@ float rd_temperature() &#123;
   return (float)(high &lt;&lt; 8 | low) * 0.0625;
 &#125;
 </code></pre>
-<h3 id="Onewire-h"><a href="#Onewire-h" class="headerlink" title="Onewire.h"></a>Onewire.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="Onewire-h"><a href="#Onewire-h" class="headerlink" title="Onewire.h"></a>Onewire.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 float rd_temperature();
 </code></pre>
 <h2 id="IIC（PCF8591-AD-DA-与AT24C02-EEPROM-）模版建立"><a href="#IIC（PCF8591-AD-DA-与AT24C02-EEPROM-）模版建立" class="headerlink" title="IIC（PCF8591(AD/DA)与AT24C02(EEPROM)）模版建立"></a>IIC（PCF8591(AD/DA)与AT24C02(EEPROM)）模版建立</h2><h3 id="iic-c"><a href="#iic-c" class="headerlink" title="iic.c"></a>iic.c</h3><h4 id="官方的参考代码-2"><a href="#官方的参考代码-2" class="headerlink" title="官方的参考代码"></a>官方的参考代码</h4><p>这里有官方提供的参考代码，所以我们上面的时序可以不用书写，我们直接进行AD读取与DA输出还有AT24C02的存储操作</p>
-<pre><code class="lang-c">/*    #   I2C代码片段说明
+<pre><code class="c">/*    #   I2C代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -983,14 +983,14 @@ void I2CSendAck(unsigned char ackbit) &#123;
 </code></pre>
 <h4 id="我们需要补充的代码-2"><a href="#我们需要补充的代码-2" class="headerlink" title="我们需要补充的代码"></a>我们需要补充的代码</h4><p>首先是我们需要绑定sda和scl的引脚，在原理图中可以看到，并且要注意一个问题，我们用到了NOP函数，所以需要引入头文件intrins.h</p>
 <p><img src="https://s2.loli.net/2024/06/07/LHlKeUbFZJ6hWXs.png" alt="image-20240603153405955"></p>
-<pre><code class="lang-c">#include &quot;intrins.h&quot;
+<pre><code class="c">#include &quot;intrins.h&quot;
 sbit scl = P2 ^ 0;
 sbit sda = P2 ^ 1;
 </code></pre>
 <p>我在这里需要说明一下IIC通信的方式，他是一个一个八位的数据，其中第一位是我们的发送地址，永远都是1，然后后面挂载了不同的外设，我们的蓝桥杯的板子挂了两个外设，一个是PCF8591，对应着AD/DA的功能；另一个是AT24C02，对应着EEPROM的存储功能。在我们板子上就长我们下面这个样子<del>（我画的有点抽象）</del>，所以我们就可以知道，如果我们要对AT24C02芯片写入数据的话，我们就需要使用地址为（1010_0000-&gt;0xa0），要读取数据的化，我们就要使用地址为（1010_0001-&gt;0xa1）;要写入DA输出的数据的话，我们就需要使用地址为（1001_0000-&gt;0x90），要读取AD采样的数据的话，我们就需要使用地址为（1001_0001-&gt;0x91）</p>
 <p><img src="https://s2.loli.net/2024/06/07/ToIADWrKHpauZCS.png" alt="image-20240603154239060"></p>
 <p>在我们使用IIC进行通信的时候，我们要遵循下面的运行逻辑</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(地址);
 I2CWaitAck();
 I2CSendByte(功能);
@@ -1097,13 +1097,13 @@ I2CWaitAck();
 </div>
 <p>有了这样一个基础，我们就可以开始着手编写我们的AD代码了</p>
 <p>我们只需要指定一下我们需要读取的通道的地址就行</p>
-<pre><code class="lang-c">unsigned char Ad_Read(unsigned char addr)
+<pre><code class="c">unsigned char Ad_Read(unsigned char addr)
 </code></pre>
 <p>这里给一个调用示例，这里需要注意的是，如果你同时读取光敏电阻和滑动变阻器的值，他们会地址交换，你们可以自己去试试。</p>
-<pre><code class="lang-c">unsigned char temp = Ad_Read(0x01);//读取光敏电阻结果
+<pre><code class="c">unsigned char temp = Ad_Read(0x01);//读取光敏电阻结果
 </code></pre>
 <p>首先我们需要选中我们的PCF芯片并且写入我们需要读取的地址,这里需要注意的就只有每次发送Byte后我们需要Wait一下</p>
-<pre><code class="lang-c">// 选择芯片为PCF
+<pre><code class="c">// 选择芯片为PCF
 I2CStart();
 I2CSendByte(0x90);
 I2CWaitAck();
@@ -1111,7 +1111,7 @@ I2CSendByte(addr);
 I2CWaitAck();
 </code></pre>
 <p>然后重新开启一下通话（因为我们上面是进行写操作，现在要进行读操作），读取后我们需要发送一个Ack为1，表明我们这边接收数据完成，后续不用接受了，结束后就可以关闭对话Stop了</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(0x91);
 I2CWaitAck();
 temp = I2CReceiveByte();
@@ -1119,7 +1119,7 @@ I2CSendAck(1);
 I2CStop();
 </code></pre>
 <p>AD完整代码</p>
-<pre><code class="lang-c">unsigned char Ad_Read(unsigned char addr) &#123;
+<pre><code class="c">unsigned char Ad_Read(unsigned char addr) &#123;
   unsigned char temp;
   // 选择芯片为PCF
   I2CStart();
@@ -1139,16 +1139,16 @@ I2CStop();
 </code></pre>
 <p>说完AD我们就要说到DA了</p>
 <p>和AD一样，我们只需要传入我们需要写入的数据就行，但是要注意一下我们的数据为数字电压，即0-255，我们输出后的电压是模拟电压，即0-5V，所以我们是一一映射过去的</p>
-<pre><code class="lang-c">void Da_Write(unsigned char dat)
+<pre><code class="c">void Da_Write(unsigned char dat)
 </code></pre>
 <p>举个🌰，我们如果想要输出电压为2V,那么我们就应该</p>
-<pre><code class="lang-c">Da_Write(2*51);
+<pre><code class="c">Da_Write(2*51);
 </code></pre>
 <p>如果想要输出的电压为2.5V，那么我们就应该，这里不用关心他会出现不匹配的情况，C语言底层会自动转换为unsigned char类型的,这类有啊注意</p>
-<pre><code class="lang-c">Da_Write(2.5*51);
+<pre><code class="c">Da_Write(2.5*51);
 </code></pre>
 <p>首先我们需要选中我们的PCF芯片并且给他我们的地址信息（前面提到过如果要开启DA输出，那么我们应该写入的地址）,这里需要注意的就只有每次发送Byte后我们需要Wait一下，这里的0x41可以更换为0x40-0x43的任何一个，但是最好和题目中要求AD需要读取的通道一致（这里也要注意在你读取AD的时候加上0x4）</p>
-<pre><code class="lang-c">void Da_Write(unsigned char dat) &#123;
+<pre><code class="c">void Da_Write(unsigned char dat) &#123;
   // 选择芯片为PCF
   I2CStart();
   I2CSendByte(0x90);
@@ -1162,11 +1162,11 @@ I2CStop();
 <p>AD与</p>
 <h5 id="EEPROM"><a href="#EEPROM" class="headerlink" title="EEPROM"></a>EEPROM</h5><p>从上面说明的内容的我们可以知道，如果我们要对AT24C02进行操作，那么就需要对地址0xa0和0xa1进行操作</p>
 <p>本质上我们的EEPROM写入与读取和AD/DA是一致的，但是我们需要注意一个点，因为我们通常写入/读取的不止一个数据，我们一般是一个数组写进去和读取，所以我们就需要注意这个点，我们的操作如下，传递的数据都是数组的首地址（如果存单个数据只需要使用&amp;name就行），传入参数为需要写入/读取数组首地址名称））str，需要写入/读取的数组地址addr，数组的大小num</p>
-<pre><code class="lang-c">void EEPROM_Write(unsigned char *str, unsigned char addr, unsigned char num)
+<pre><code class="c">void EEPROM_Write(unsigned char *str, unsigned char addr, unsigned char num)
 void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num)
 </code></pre>
 <p>这里给一个调用的示例，需要注意一下如果写入为unsigned int，可以不用分为高低位存储，但是需要分为高低位读取</p>
-<pre><code class="lang-c">unsigned char arr_input[5]=&#123;1,2,3,4,5&#125;;
+<pre><code class="c">unsigned char arr_input[5]=&#123;1,2,3,4,5&#125;;
 unsigned char arr_output[5];
 EEPROM_Write(arr_input,0,5);
 EEPROM_Read(arr_output,0,5);
@@ -1186,19 +1186,19 @@ output = high&lt;&lt;4 | low;
 </code></pre>
 <p>现在我来说一下实现细节</p>
 <p>先说明一下EEPROM_Read函数，和上文的AD读取一样，我们需要先选中AT24C02，并且功能为写，然后进行位置的传输，确认我们需要读取的地址</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(0xa0);
 I2CWaitAck();
 I2CSendByte(addr);
 I2CWaitAck();
 </code></pre>
 <p>在我们读取的时候，和上文AD一样，我们需要重新开启一个对话进行读取</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(0xa1);
 I2CWaitAck();
 </code></pre>
 <p>但是在我们读取的时候需要注意一个点，我们使用的数组进行的数据读取，并且在我们读取的时候对指针进行++操作，当我们还没有读完数据的时候，我们发送Ack为0，代表我们需要继续读取，当我们读取数据结束后，我们发送Ack为1，表示读取结束，最后也别忘记需要进行Stop停止交流。</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(0xa1);
 I2CWaitAck();
 while (num--) &#123;
@@ -1212,7 +1212,7 @@ I2CStop();
 </code></pre>
 <blockquote>
 <p>在这里说明一下*str++代表的含义，这是c的一个写法，等价于下面的代码</p>
-<pre><code class="lang-c">unsigned char arr[5];
+<pre><code class="c">unsigned char arr[5];
 unsigned char i = 0;
 unsigned char num = 5;
 while(num--)
@@ -1224,7 +1224,7 @@ i++;
 </code></pre>
 </blockquote>
 <p>完整的代码EEPROM_READ如下</p>
-<pre><code class="lang-c">void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num) &#123;
+<pre><code class="c">void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num) &#123;
   I2CStart();
   I2CSendByte(0xa0);
   I2CWaitAck();
@@ -1246,14 +1246,14 @@ i++;
 </code></pre>
 <p>我们可以从上面看到，AD和EEPROM_READ可以进行类比；同理，我们的DA和EEPROM_Write也可以进行类比，但是EEPROM_Write有一个需要注意的点，我会在下面进行说明</p>
 <p>我们第一步还是选择我们的芯片，选择我们需要写入的地址</p>
-<pre><code class="lang-c">I2CStart();
+<pre><code class="c">I2CStart();
 I2CSendByte(0xa0);
 I2CWaitAck();
 I2CSendByte(addr);
 I2CWaitAck();
 </code></pre>
 <p>第二步就是使用一个循环进行写入，这里需要注意一个问题，就是我们每写入一个数据，都需要I2C_Delay一下，注意不是Delay，而是I2C_Delay，经过我们测试，当这个值为200 的时候效果是可以的，并且这里有个最最重要的点，在我们Stop结束后，我们需要进行4个255时间的I2C_Delay<del>（其实我在群里面说过，但你们一直觉得我在讲乐子）</del></p>
-<pre><code class="lang-c">while (num--) &#123;
+<pre><code class="c">while (num--) &#123;
     I2CSendByte(*str++);
     I2CWaitAck();
     I2C_Delay(200);
@@ -1265,7 +1265,7 @@ I2C_Delay(255);
 I2C_Delay(255);
 </code></pre>
 <p>完整的代码EEPROM_Write如下</p>
-<pre><code class="lang-c">void EEPROM_Write(unsigned char *str, unsigned char addr, unsigned char num) &#123;
+<pre><code class="c">void EEPROM_Write(unsigned char *str, unsigned char addr, unsigned char num) &#123;
   I2CStart();
   I2CSendByte(0xa0);
   I2CWaitAck();
@@ -1285,7 +1285,7 @@ I2C_Delay(255);
 &#125;
 </code></pre>
 <p>完整代码如下</p>
-<pre><code class="lang-c">/*    #   I2C代码片段说明
+<pre><code class="c">/*    #   I2C代码片段说明
         1.     本文件夹中提供的驱动代码供参赛选手完成程序设计参考。
         2.
    参赛选手可以自行编写相关代码或以该代码为基础，根据所选单片机类型、运行速度和试题
@@ -1464,7 +1464,7 @@ void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num) &#12
   I2CStop();
 &#125;
 </code></pre>
-<h3 id="iic-h"><a href="#iic-h" class="headerlink" title="iic.h"></a>iic.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="iic-h"><a href="#iic-h" class="headerlink" title="iic.h"></a>iic.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 unsigned char Ad_Read(unsigned char addr);
 void Da_Write(unsigned char dat);
 void EEPROM_Write(unsigned char *str, unsigned char addr, unsigned char num);
@@ -1474,7 +1474,7 @@ void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num);
 <p>首先是使用isp生成一个用定时器2计时的串口1的代码，波特率为9600（比赛的时候可能不是9600，要根据题目来看），定时器时钟选用12T，数据位为8位</p>
 <p><img src="https://s2.loli.net/2024/06/07/oWcze7YF6ASNX1G.png" alt="image-20240604144711333"></p>
 <p>我们直接把他复制到我们代码里面就行，最后别忘记加一个EA=1来开启总中断，还有些isp版本可能比较老，没有使能中断的选项，所以需要自己加上ES=1</p>
-<pre><code class="lang-c">void Uart1_Init(void)  // 9600bps@12.000MHz
+<pre><code class="c">void Uart1_Init(void)  // 9600bps@12.000MHz
 &#123;
   SCON = 0x50;   // 8位数据,可变波特率
   AUXR |= 0x01;  // 串口1选择定时器2为波特率发生器
@@ -1488,7 +1488,7 @@ void EEPROM_Read(unsigned char *str, unsigned char addr, unsigned char num);
 </code></pre>
 <p>我们这里不需要实现复杂的函数，只需要实现一个重定向就行，使用printf直接将数据发送到串口就行，我现在说一下步骤</p>
 <p>我们通过查看c51里面（注意是c51，不是标准的c语言函数库，直接在keil里面右键打开），我们可以看到下方有一个putchar的一个extern的函数定义，这就是我们需要重载的函数，因为我们printf本质上就是调用putchar的</p>
-<pre><code class="lang-c">/*--------------------------------------------------------------------------
+<pre><code class="c">/*--------------------------------------------------------------------------
 STDIO.H
 
 Prototypes for standard I/O functions.
@@ -1532,20 +1532,20 @@ extern int puts (const char *);
 #endif
 </code></pre>
 <p>我们可以知道，串口在发送的时候，会将数据放进缓冲区SBUF（如果你用串口2那就是S2BUF，但是这里没涉及到，就不用管了），当我们正在发送的时候TI标志位为0，当我们发送完成后，他就会被置为0，然后我们需要将ch返回（这个是函数本身就需要返回的char）</p>
-<pre><code class="lang-c">extern char putchar(char ch) &#123;
+<pre><code class="c">extern char putchar(char ch) &#123;
   SBUF = ch;
   while (TI == 0);
   TI = 0;
   return ch;
 &#125;
 </code></pre>
-<h3 id="uart-h"><a href="#uart-h" class="headerlink" title="uart.h"></a>uart.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="uart-h"><a href="#uart-h" class="headerlink" title="uart.h"></a>uart.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 
 #include &quot;stdio.h&quot;
 void Uart1_Init(void);
 </code></pre>
 <h2 id="Ul超声波模版建立"><a href="#Ul超声波模版建立" class="headerlink" title="Ul超声波模版建立"></a>Ul超声波模版建立</h2><h3 id="ul-c"><a href="#ul-c" class="headerlink" title="ul.c"></a>ul.c</h3><p>在这里我们需要注意，串口官方是没有给底层的，我们需要自己手搓。我们通过查询原理图可以看到，超声波的T为P10，R为P11，所以我们需要定义一下</p>
-<pre><code class="lang-c">sbit Tx = P1 ^ 0;
+<pre><code class="c">sbit Tx = P1 ^ 0;
 sbit Rx = P1 ^ 1;
 </code></pre>
 <p><img src="https://s2.loli.net/2024/06/07/5sNVCegmFoRDHpx.png" alt="image-20240604151041554"></p>
@@ -1562,7 +1562,7 @@ d = 1.7*{10^4}*{10^{ - 6}}t = 0.017t</script><p>图来自微信群友chmod-wrx�
 {1 \over {40k}} = 25 \cdot {10^{ - 6}}s = 25us</script><p>也就是我们需要<br>$<br>12us<br>$<br>将发送的电平进行反转</p>
 <p>代码如下，我们首先使用isp生成一个12us的延时函数,这里需要注意的是要正确使用系统频率为12MHz；如果这里测量结果有问题，可以尝试将33修改为38或者其他的数据，因为软件延时不准。</p>
 <p><img src="https://s2.loli.net/2024/06/07/ZhKAk2iCFxE3TQs.png" alt="image-20240604153718702"></p>
-<pre><code class="lang-c">void Delay12us(void)    //@12.000MHz
+<pre><code class="c">void Delay12us(void)    //@12.000MHz
 &#123;
     unsigned char data i;
 
@@ -1573,7 +1573,7 @@ d = 1.7*{10^4}*{10^{ - 6}}t = 0.017t</script><p>图来自微信群友chmod-wrx�
 &#125;
 </code></pre>
 <p>然后就是我们的超声波发送函数，发送8个4kHz的方波</p>
-<pre><code class="lang-c">void Ut_Wave_Init() &#123;
+<pre><code class="c">void Ut_Wave_Init() &#123;
   unsigned char i;
   for (i = 0; i &lt; 8; i++) &#123;
     Tx = 1;
@@ -1585,11 +1585,11 @@ d = 1.7*{10^4}*{10^{ - 6}}t = 0.017t</script><p>图来自微信群友chmod-wrx�
 </code></pre>
 <p>最后是我们最重要的数据接收与转换函数的书写，在这里我们使用的pca定时器，可以节省定时器来进行其他的操作（因为ne555强制占用定时器0，串口考到就会占用一个定时器，还有一个定时器需要用来进行函数轮询，所以我们就必须用其他的定时器进行超声波的操作）,其实PCA本质上还是一个定时器，所以他也存在一些定时器的参数，比如TLx-&gt;CL;THx-&gt;CH;TMOD-&gt;CMOD;TRx-&gt;CR;TFx-&gt;CF</p>
 <p>我们首先需要对定时器的CH和CL清零，为了我们计数做准备；然后将CMOD配置为0x00，十六位不重载定时器。</p>
-<pre><code class="lang-c">CH = CL = 0;
+<pre><code class="c">CH = CL = 0;
 CMOD = 0x00;
 </code></pre>
 <p>在我们发送超声波的时候，我们需要将总中断关闭，在我们发送完毕后就关掉，在我们发送完成后，就打开CR开始计时，等待我们收到回应（收到回应后Rx为0）或者计数溢出（溢出后CF为1），我们就关闭CR开始读取数据</p>
-<pre><code class="lang-c">EA = 0;
+<pre><code class="c">EA = 0;
 Ut_Wave_Init();
 EA = 1;
 
@@ -1598,14 +1598,14 @@ while (Rx &amp;&amp; !CF);
 CR = 0;
 </code></pre>
 <p>如果我们是因为收到回应而结束（那么就代表我们测量到了数据），那么我们就进行时间读取，如下所示，你们可能会好奇为什么+3，这是因为我们实际测量发现，+3后在远程数据（测量结果&gt;10的时候）误差会比较小，而近程数据（测量数据&lt;10）满足误差范围，我们也不可能测量得到0这个数据（题目中一般都不会测到0）（所以我们才把他视为测量错误的返回结果）</p>
-<pre><code class="lang-c">time = CH &lt;&lt; 8 | CL;  
+<pre><code class="c">time = CH &lt;&lt; 8 | CL;  
 return (0.017 * time + 3);
 </code></pre>
 <p>如果我们是因为计数溢出（没有收到返回的信号，代表测量错误），我们就直接返回为0，表示错误结果</p>
-<pre><code class="lang-c">return 0;
+<pre><code class="c">return 0;
 </code></pre>
 <p>转换的完整代码如下</p>
-<pre><code class="lang-c">unsigned char Ut_Wave_Data() &#123;
+<pre><code class="c">unsigned char Ut_Wave_Data() &#123;
   unsigned int time;
   CH = CL = 0;
   CMOD = 0x00;
@@ -1630,7 +1630,7 @@ return (0.017 * time + 3);
 &#125;
 </code></pre>
 <p>完整代码如下</p>
-<pre><code class="lang-c">#include &quot;ul.h&quot;
+<pre><code class="c">#include &quot;ul.h&quot;
 
 #include &quot;intrins.h&quot;
 sbit Tx = P1 ^ 0;
@@ -1677,11 +1677,11 @@ unsigned char Ut_Wave_Data() &#123;
   &#125;
 &#125;
 </code></pre>
-<h3 id="ul-h"><a href="#ul-h" class="headerlink" title="ul.h"></a>ul.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="ul-h"><a href="#ul-h" class="headerlink" title="ul.h"></a>ul.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 unsigned char Ut_Wave_Data();
 </code></pre>
 <h2 id="init初始化模版建立"><a href="#init初始化模版建立" class="headerlink" title="init初始化模版建立"></a>init初始化模版建立</h2><h3 id="init-c"><a href="#init-c" class="headerlink" title="init.c"></a>init.c</h3><p>我们在启动开发板的时候最好对其进行初始化，关闭蜂鸣器和继电器，MOTOR和全部LED灯，避免上电情况有误</p>
-<pre><code class="lang-c">#include &quot;init.h&quot;
+<pre><code class="c">#include &quot;init.h&quot;
 void System_Init() &#123;
   P0 = 0xff;
   P2 = P2 &amp; 0x1f | 0x80;
@@ -1692,7 +1692,7 @@ void System_Init() &#123;
   P2 &amp;= 0x1f;
 &#125;
 </code></pre>
-<h3 id="init-h"><a href="#init-h" class="headerlink" title="init.h"></a>init.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="init-h"><a href="#init-h" class="headerlink" title="init.h"></a>init.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 void System_Init();
 </code></pre>
 <h2 id="main主函数书写"><a href="#main主函数书写" class="headerlink" title="main主函数书写"></a>main主函数书写</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><p>现在我们来进行主函数的编写，我也拆分为模块，但是最后还是会给一个整体的代码</p>
@@ -1712,7 +1712,7 @@ void System_Init();
 <li>定义了int型的频率变量Freq，用于测频结果的存放</li>
 </ul>
 </blockquote>
-<pre><code class="lang-c">/* LED与数码管 */
+<pre><code class="c">/* LED与数码管 */
 unsigned char ucLed[8] = &#123;0, 0, 0, 0, 0, 0, 0, 0&#125;;
 unsigned char Seg_Pos;
 unsigned char Seg_Buf[8] = &#123;10, 10, 10, 10, 10, 10, 10, 10&#125;;
@@ -1731,7 +1731,7 @@ unsigned int time_all_1s;
 unsigned int Freq;//ne555测频
 </code></pre>
 <h4 id="数据读取模块"><a href="#数据读取模块" class="headerlink" title="数据读取模块"></a>数据读取模块</h4><p>我们单独写一个模块对数据进行读取，方便我们进行不同数据的操作，这里使用%的操作来进行时间的定时，比如我们的时间读取，就每隔50ms（因为我定时器是1ms）进行一次；AD读取每隔100ms一次；温度读取每隔500ms一次（这里仅作参考，后续还是要自己搓一下试试）</p>
-<pre><code class="lang-c">void Data_Proc() 
+<pre><code class="c">void Data_Proc() 
   if (time_all_1s % 50 == 0) &#123;
     // 时间读取
   &#125;
@@ -1750,7 +1750,7 @@ unsigned int Freq;//ne555测频
 </blockquote>
 <p><img src="https://s2.loli.net/2024/06/07/asTIfD8JhKuctzl.png" alt="image-20240604200625869"></p>
 <p>对应的代码如下，我们将这四个变量设置为静态局部变量，可以有效节省内存空间，使用if语句那一段表明我们选择10ms跑一次代码（因为我们定时是1ms的）</p>
-<pre><code class="lang-c">void Key_Proc() &#123;
+<pre><code class="c">void Key_Proc() &#123;
   static unsigned char Key_Val, Key_Down, Key_Up, Key_Old;
   if (time_all_1s % 10) return;
   Key_Val = Key_Read();
@@ -1810,7 +1810,7 @@ unsigned int Freq;//ne555测频
 </div>
 <p>我们可以从这里看出，当我们按下的时候，那一瞬间Down会是4（注意是一瞬间），其余时候都是0；同理Up也是一样，当我们抬起的瞬间Up会是4（注意是一瞬间），其余时候是0</p>
 <p>那么我们如何在这个代码里面进行书写呢，其实很简单，我们一般判断按键都是判断的按键按下，即Down的数据，那么我们按照下面这样写就行，下面就是按下S4的一个示例</p>
-<pre><code class="lang-c">void Key_Proc() &#123;
+<pre><code class="c">void Key_Proc() &#123;
     static unsigned char Key_Val, Key_Down, Key_Up, Key_Old;
     if (time_all_1s % 10) return;
     Key_Val = Key_Read();
@@ -1822,12 +1822,12 @@ unsigned int Freq;//ne555测频
 &#125;
 </code></pre>
 <h4 id="Seg数码管模块"><a href="#Seg数码管模块" class="headerlink" title="Seg数码管模块"></a>Seg数码管模块</h4><p>这个和V2模版不一样，他将数据读取放出去了，所以我们的数码管里面不过多涉及到数据读取，这里选择的是20ms进行一次数码管状态更新</p>
-<pre><code class="lang-c">void Seg_Proc() &#123;
+<pre><code class="c">void Seg_Proc() &#123;
   if (time_all_1s % 20) return;
 &#125;
 </code></pre>
 <p>如何使用呢，其实也非常简单，我们只需要按照下方的写法即可（因为一般来说我们都有多个界面进行切换，我们定义一个变量Seg_Show_Mode来进行书写，如果有子界面的话，拿我们就再定义一个mode就行）</p>
-<pre><code class="lang-c">void Seg_Proc() &#123;
+<pre><code class="c">void Seg_Proc() &#123;
     if (time_all_1s % 20) return;
     switch(Seg_Show_Mode)
     &#123;
@@ -1843,10 +1843,10 @@ unsigned int Freq;//ne555测频
 &#125;
 </code></pre>
 <h4 id="Led灯模块"><a href="#Led灯模块" class="headerlink" title="Led灯模块"></a>Led灯模块</h4><p>这里面我的话经常放的是Led，蜂鸣器，继电器，MOTOR口的相关逻辑，这里不需要设置定时进入</p>
-<pre><code class="lang-c">void Led_Proc() &#123;&#125;
+<pre><code class="c">void Led_Proc() &#123;&#125;
 </code></pre>
 <p>使用示例如下</p>
-<pre><code class="lang-c">void Led_Proc() &#123;
+<pre><code class="c">void Led_Proc() &#123;
     ucLed[0] = 1;//L1点亮
     ucLed[1] = 0;//L2熄灭
     Relay(1);//打开继电器（L10亮）
@@ -1858,7 +1858,7 @@ unsigned int Freq;//ne555测频
 &#125;
 </code></pre>
 <h4 id="Uart串口模块"><a href="#Uart串口模块" class="headerlink" title="Uart串口模块"></a>Uart串口模块</h4><p>我们在这里使用了串口超时解析，即10ms内没有收集到串口的信息的时候我们才进入并进行解析（后续在定时器里面会提到这个Sys_Tick），在我们解析结束后使用memset函数将接收的数组置为0（为了防止后续解析被干扰），并将索引置为0，为下一次接收解析进行准备</p>
-<pre><code class="lang-c">void Uart_Proc() &#123;
+<pre><code class="c">void Uart_Proc() &#123;
   if (Uart_Rx_Index == 0) return;
   if (Sys_Tick &gt;= 10) &#123;
     Sys_Tick = Uart_flag = 0;
@@ -1869,7 +1869,7 @@ unsigned int Freq;//ne555测频
 &#125;
 </code></pre>
 <p>使用示例，这里发送小写的ok返回hello，注意一下，判断的时候用的是单引号而不是双引号</p>
-<pre><code class="lang-c">void Uart_Proc() &#123;
+<pre><code class="c">void Uart_Proc() &#123;
   if (Uart_Rx_Index == 0) return;
   if (Sys_Tick &gt;= 10) &#123;
     Sys_Tick = Uart_flag = 0;
@@ -1883,7 +1883,7 @@ unsigned int Freq;//ne555测频
 <h4 id="定时器0初始化（NE555模块）"><a href="#定时器0初始化（NE555模块）" class="headerlink" title="定时器0初始化（NE555模块）"></a>定时器0初始化（NE555模块）</h4><p>这个模块是最有意思的，首先我们需要注意一下，P34和singal的跳线帽要插在一起，并且按键方面需要删除P34，然后才能开始测，这里依然用isp生成一下初始化的定时器0，但是这里要注意，新版的不能生成0ms，我们就随便生成个时间，然后按照我这样勾选后复制粘贴就行</p>
 <p><img src="https://s2.loli.net/2024/06/07/HlZIGUcQTDK2OBo.png" alt="image-20240604202942361"></p>
 <p>我们需要将TL0和TH0的值改为0，并且在TMOD &amp;= 0xF0;下面对其进行配置  TMOD |= 0x05;将其变为十六位不自动重载（这里具体可以参考手册里面对于定时器的配置，我之前的视频有提到<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Fk4y1f7LS/">蓝桥杯单片机ne555模块</a>，点击即可观看），这里别忘了EA开启总中断（这是我的习惯），频率的读取放在定时器1那里讲</p>
-<pre><code class="lang-c">void Timer0_Init(void)  // 1毫秒@12.000MHz
+<pre><code class="c">void Timer0_Init(void)  // 1毫秒@12.000MHz
 &#123;
   AUXR &amp;= 0x7F;  // 定时器时钟12T模式
   TMOD &amp;= 0xF0;  // 设置定时器模式
@@ -1898,7 +1898,7 @@ unsigned int Freq;//ne555测频
 <h4 id="定时器1初始化"><a href="#定时器1初始化" class="headerlink" title="定时器1初始化"></a>定时器1初始化</h4><p>这是我们轮询的定时器的初始化代码，我们使用isp生成1ms定时器1的代码（记得勾选上使能），老版本没有使能，所以记得加上ET1 = 1开启</p>
 <p><img src="https://s2.loli.net/2024/06/07/BaihIcRuyDYwAXr.png" alt="image-20240604203409782"></p>
 <p>当然，不要忘记EA = 1，</p>
-<pre><code class="lang-c">void Timer1_Init(void)  // 1毫秒@12.000MHz
+<pre><code class="c">void Timer1_Init(void)  // 1毫秒@12.000MHz
 &#123;
   AUXR &amp;= 0xBF;  // 定时器时钟12T模式
   TMOD &amp;= 0x0F;  // 设置定时器模式
@@ -1916,7 +1916,7 @@ unsigned int Freq;//ne555测频
 <p>然后就是我们的一个位选的代码，因为我们数码管本质上是一位一位显示，所以我们需要写一个位选的变量来进行位选，这里使用的Seg_Pos = (++Seg_Pos) % 8将Seg_Pos这个变量在0~7中间进行循环</p>
 <p>接着就是我们的数码管显示函数，这里不需要多说了，保持他不变就行，传入为位选、位选对应的段选显示、位选对应的小数点显示</p>
 <p>最后就是我们的Led显示函数，这里我并没有选择和数码管同步，而是选择在中断里面写了个for循环来进行显示，因为它不涉及到扫描等操作，本质上就是可以直接一起显示。</p>
-<pre><code class="lang-c">void Timer1_Isr(void) interrupt 3 &#123;
+<pre><code class="c">void Timer1_Isr(void) interrupt 3 &#123;
   unsigned char i;
   if (++time_all_1s == 1000) &#123;
     time_all_1s = 0;
@@ -1931,7 +1931,7 @@ unsigned int Freq;//ne555测频
 </code></pre>
 <h4 id="串口中断（这里代码写死）"><a href="#串口中断（这里代码写死）" class="headerlink" title="串口中断（这里代码写死）"></a>串口中断（这里代码写死）</h4><p>我们串口有一个接收中断，串口1的中断号查询后发现为4</p>
 <p>我们第一行就是判断是否RI为1，因为RI为1则代表有信息过来了，当我们收集到信息时，我们将Uart_flag置为1，Sys_Tick置为0，开始嘀嗒计时，当我们10ms没有接收到新的数据的时候，我们就认为数据接收完成，可以开始进行串口处理，后面的接收就不需要多讲了，我们是一位一位进行接收的，而读写都是用的SBUF这个缓冲区（串口1，如果是串口2则是S2BUF，但是串口2不会考，所以这里不用管），我们接收完成后，将RI置为0，为下一次接收做准备，最后一行的&gt;10清零，则是为了避免出现传入数据溢出，导致程序异常，这里的10取决于你的字符串数组的位数，我在最上面定的是10位，所以这里写的10</p>
-<pre><code class="lang-c">void Uart1_Isr(void) interrupt 4 &#123;
+<pre><code class="c">void Uart1_Isr(void) interrupt 4 &#123;
   if (RI) &#123;
     Uart_flag = 1;
     Sys_Tick = 0;
@@ -1946,7 +1946,7 @@ unsigned int Freq;//ne555测频
 <p>你可以发现，我在这里进行了一次温度的空读取，因为温度上电后会显示85（温度转换的时间），如果在后面才给他开始温度转换的话，那么很有可能跳85，导致测量结果错误，这里的延时函数也是用isp直接生成的，注意系统时间别选错了就行</p>
 <p><img src="https://s2.loli.net/2024/06/07/S2nUrMHoN7eavQ1.png" alt="image-20240604205532498"></p>
 <p>我们写完初始化之后就需要写一下循环了，51单片机里面必须将循环写死，所以我们用了while(1)，这里的顺序倒没什么特殊的要求，但是尽量按照我这个顺序就行，不会出问题的。</p>
-<pre><code class="lang-c">void main() &#123;
+<pre><code class="c">void main() &#123;
     System_Init();
     Timer0_Init();
     Timer1_Init();
@@ -1962,7 +1962,7 @@ unsigned int Freq;//ne555测频
     &#125;
 &#125;
 </code></pre>
-<h4 id="完整的main-c"><a href="#完整的main-c" class="headerlink" title="完整的main.c"></a>完整的main.c</h4><pre><code class="lang-c">#include &quot;main.h&quot;
+<h4 id="完整的main-c"><a href="#完整的main-c" class="headerlink" title="完整的main.c"></a>完整的main.c</h4><pre><code class="c">#include &quot;main.h&quot;
 /* LED与数码管 */
 unsigned char ucLed[8] = &#123;0, 0, 0, 0, 0, 0, 0, 0&#125;;
 unsigned char Seg_Pos;
@@ -2094,7 +2094,7 @@ void main() &#123;
   &#125;
 &#125;
 </code></pre>
-<h3 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h3><pre><code class="lang-c">#include &lt;STC15F2K60S2.H&gt;
+<h3 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h3><pre><code class="c">#include &lt;STC15F2K60S2.H&gt;
 
 #include &quot;ds1302.h&quot;
 #include &quot;iic.h&quot;
