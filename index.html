@@ -7,6 +7,7 @@
     <meta name="author" content="左岚" />
     <meta name="description" content="电子信息工程专业的摆子大学生🧐" />
     <meta name="keywords" content="" />
+    
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
@@ -177,7 +178,13 @@
             <div class="wrap">
                 <h1>左岚の秘密基地</h1>
                 <h3></h3>
-                <h5>电子信息工程专业的摆子大学生🧐</h5>
+                <h4>电子信息工程专业的摆子大学生🧐</h5>
+                <h5>
+                    <p id="hitokoto">Getting poem ... </p>
+                    <p id="hitoauthor">Getting poem ... </p>
+                    <p id="hitofrom">Getting poem ... </p> <!-- 此三行表示把下面脚本中获取的内容嵌入网页中 -->
+
+                </h5>
             </div>
         </span>
     </div>
@@ -338,6 +345,23 @@
         </div>
         
     </div>
+    <script>
+        fetch('https://v1.hitokoto.cn/?c=i&c=b&c=e&c=d&c=j') //此处c=i表示获取诗词类型，其他类型查看https://developer.hitokoto.cn/sentence/，找到所需要的类型，如文学，改成https://v1.hitokoto.cn/?c=d即可
+            .then(function (res){
+            return res.json();
+        })
+            .then(function (data) {
+            var hitokoto = document.getElementById('hitokoto'); 
+            hitokoto.innerText = data.hitokoto;//获取正文
+            var hitoauthor = document.getElementById('hitoauthor');
+            hitoauthor.innerText = "——" + data.from_who; // 获取作者
+            var hitofrom = document.getElementById('hitofrom');
+            hitofrom.innerText = "《" + data.from + '\xa0》'; //获取来源作品
+        })
+            .catch(function (err) {
+            console.error(err);
+        })
+    </script>
 </footer>
 
         </div>

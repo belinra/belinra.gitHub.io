@@ -7,6 +7,7 @@
     <meta name="author" content="左岚" />
     <meta name="description" content="电子信息工程专业的摆子大学生🧐" />
     <meta name="keywords" content="" />
+    
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
@@ -167,7 +168,7 @@
         
         
         <span>
-            <a href="/categories/%E5%A4%A7%E5%AD%A6%E5%AD%A6%E4%B9%A0/" style="background: #00a596">
+            <a href="/categories/%E5%A4%A7%E5%AD%A6%E5%AD%A6%E4%B9%A0/" style="background: #00bcd4">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -200,7 +201,7 @@
         
         
         <span>
-            <a href="/categories/%E8%93%9D%E6%A1%A5%E6%9D%AF/%E5%8D%95%E7%89%87%E6%9C%BA/" style="background: #03a9f4">
+            <a href="/categories/%E8%93%9D%E6%A1%A5%E6%9D%AF/%E5%8D%95%E7%89%87%E6%9C%BA/" style="background: #ffa2c4">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -265,6 +266,23 @@
         </div>
         
     </div>
+    <script>
+        fetch('https://v1.hitokoto.cn/?c=i&c=b&c=e&c=d&c=j') //此处c=i表示获取诗词类型，其他类型查看https://developer.hitokoto.cn/sentence/，找到所需要的类型，如文学，改成https://v1.hitokoto.cn/?c=d即可
+            .then(function (res){
+            return res.json();
+        })
+            .then(function (data) {
+            var hitokoto = document.getElementById('hitokoto'); 
+            hitokoto.innerText = data.hitokoto;//获取正文
+            var hitoauthor = document.getElementById('hitoauthor');
+            hitoauthor.innerText = "——" + data.from_who; // 获取作者
+            var hitofrom = document.getElementById('hitofrom');
+            hitofrom.innerText = "《" + data.from + '\xa0》'; //获取来源作品
+        })
+            .catch(function (err) {
+            console.error(err);
+        })
+    </script>
 </footer>
 
         </div>
