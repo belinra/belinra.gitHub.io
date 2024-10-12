@@ -1,0 +1,998 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <title>C语言入门基础 | 左岚の秘密基地</title>
+    <meta name="author" content="左岚" />
+    <meta name="description" content="电子信息工程专业的摆子大学生🧐" />
+    <meta name="keywords" content="" />
+    
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/rainbow.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <canvas id="fireworks" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+<canvas id="background" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"></canvas>
+<script src="/js/background.min.js"></script>
+<div id="cursor"></div>
+<link rel="stylesheet" href="/css/cursor.min.css">
+<script src="/js/cursor.min.js"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+<script src="/live2d-widget/autoload.js"></script>
+<body>
+   
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>左岚の秘密基地</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;左岚の秘密基地</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>C语言入门基础</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/12
+        </span>
+        
+        <span class="category">
+            <a href="/categories/C%E8%AF%AD%E8%A8%80/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                C语言
+            </a>
+        </span>
+        
+        
+    </div>
+            <!-- 在这里添加TOC代码 -->
+            
+                <aside class="sidebar">
+                    <div id="toc-container">
+                        <h3>Table of Contents</h3>
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">第一部分：C语言基础概念详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">1. C语言的起源与特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">2. 程序的基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.3.</span> <span class="toc-text">3. 变量和数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text">4. 常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.5.</span> <span class="toc-text">5. 基本输入输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.6.</span> <span class="toc-text">6. 运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.7.</span> <span class="toc-text">7. 条件控制结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.8.</span> <span class="toc-text">8. 循环控制结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.9.</span> <span class="toc-text">9. 函数与作用域</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">第二部分：数组与字符串的详细介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">1. 数组概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.1.</span> <span class="toc-text">一维数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.2.</span> <span class="toc-text">数组初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.3.</span> <span class="toc-text">多维数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">2. 字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.1.</span> <span class="toc-text">字符串的声明与初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.2.</span> <span class="toc-text">字符串输入输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.3.</span> <span class="toc-text">常用字符串处理函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">3. 数组与字符串的常见操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.1.</span> <span class="toc-text">数组与指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.2.</span> <span class="toc-text">字符串的常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text">4. 字符串与数组的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">第三部分：指针详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">1. 指针的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.1.</span> <span class="toc-text">指针声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.2.</span> <span class="toc-text">指针的地址和解引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.2.</span> <span class="toc-text">2. 指针与数组的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.3.</span> <span class="toc-text">3. 指针与函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.3.1.</span> <span class="toc-text">通过指针传递参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.3.2.</span> <span class="toc-text">函数指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.4.</span> <span class="toc-text">4. 指针的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.4.1.</span> <span class="toc-text">空指针（NULL指针）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.4.2.</span> <span class="toc-text">悬空指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.4.3.</span> <span class="toc-text">野指针</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.5.</span> <span class="toc-text">5. 指针与动态内存管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.6.</span> <span class="toc-text">6. 指针的常见错误</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">第四部分：结构体、联合体与指针的结合使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">1. 结构体（Struct）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.1.</span> <span class="toc-text">结构体的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.2.</span> <span class="toc-text">结构体变量的定义与访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.3.</span> <span class="toc-text">结构体初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.4.</span> <span class="toc-text">结构体数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.2.</span> <span class="toc-text">2. 结构体与指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.1.</span> <span class="toc-text">结构体指针的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.2.</span> <span class="toc-text">通过指针访问结构体成员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.3.</span> <span class="toc-text">结构体指针与动态内存分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.3.</span> <span class="toc-text">3. 联合体（Union）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.1.</span> <span class="toc-text">联合体的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.2.</span> <span class="toc-text">联合体的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.3.</span> <span class="toc-text">联合体的大小</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.4.</span> <span class="toc-text">4. 结构体与联合体的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.5.</span> <span class="toc-text">5. 嵌套结构体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.6.</span> <span class="toc-text">6. 指向结构体数组的指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.7.</span> <span class="toc-text">7. 位域（Bit Fields）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.7.1.</span> <span class="toc-text">位域的声明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">第五部分：文件操作与预处理器指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.1.</span> <span class="toc-text">1. 文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.1.1.</span> <span class="toc-text">文件指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.1.2.</span> <span class="toc-text">打开和关闭文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.1.3.</span> <span class="toc-text">读写文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.2.</span> <span class="toc-text">字符读写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.3.</span> <span class="toc-text">字符串读写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.4.</span> <span class="toc-text">格式化读写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.5.</span> <span class="toc-text">二进制文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.5.1.</span> <span class="toc-text">文件定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.6.</span> <span class="toc-text">2. 预处理器指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.6.1.</span> <span class="toc-text">#include：文件包含</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.6.2.</span> <span class="toc-text">#define：宏定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.6.3.</span> <span class="toc-text">条件编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.6.4.</span> <span class="toc-text">#undef：取消宏定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.6.5.</span> <span class="toc-text">#pragma：特殊指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.7.</span> <span class="toc-text">3. 宏与内联函数的区别</span></a></li></ol></li></ol>
+                    </div>
+                </aside>
+                
+    
+    <div class="content" v-pre>
+        <h1><span id="第一部分c语言基础概念详解"><strong>第一部分：C语言基础概念详解</strong></span></h1><h2><span id="1-c语言的起源与特点">1. <strong>C语言的起源与特点</strong></span></h2><p>C语言诞生于20世纪70年代初，最初用于开发UNIX操作系统。它的设计目标是使得代码更高效且能够直接操作硬件，因此C语言也被称为“低级语言的高级化”。以下是C语言的几个主要特点：</p>
+<ul>
+<li><strong>高效性</strong>：C语言编写的程序运行速度非常快，尤其适合底层开发，如操作系统、驱动程序等。</li>
+<li><strong>可移植性</strong>：C语言代码具有良好的跨平台移植性，只需少量修改就可以在不同平台上编译运行。</li>
+<li><strong>灵活性</strong>：C语言允许直接访问内存，可以进行精细的内存操作（如指针操作）。</li>
+<li><strong>丰富的运算符</strong>：C语言提供了丰富的运算符集，能够进行各种类型的数据运算和逻辑运算。</li>
+</ul>
+<h2><span id="2-程序的基本结构">2. <strong>程序的基本结构</strong></span></h2><p>每个C语言程序都由以下几个主要部分组成：</p>
+<ul>
+<li><strong>预处理指令</strong>：使用 <code>#include</code>来引入标准库，如 <code>stdio.h</code>，为输入输出提供函数。</li>
+<li><strong>主函数 <code>main()</code></strong>：每个C程序的入口点是 <code>main()</code>函数，程序的执行从 <code>main()</code>开始。其返回类型通常是 <code>int</code>，表示程序的执行状态（<code>0</code>通常表示成功）。</li>
+</ul>
+<p>一个简单的C语言程序如下：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+
+int main() &#123;
+    printf(&quot;Hello, World!\n&quot;);
+    return 0;
+&#125;
+</code></pre>
+<h2><span id="3-变量和数据类型">3. <strong>变量和数据类型</strong></span></h2><p>C语言是一种<strong>静态类型语言</strong>，这意味着在使用变量之前，必须声明变量的类型。主要的数据类型有：</p>
+<ul>
+<li><strong>整数类型</strong> (<code>int</code>)：用于存储整型数值，通常占用4字节。<ul>
+<li>例：<code>int a = 10;</code></li>
+</ul>
+</li>
+<li><strong>浮点类型</strong> (<code>float</code>, <code>double</code>)：用于存储小数，<code>float</code>通常占用4字节，<code>double</code>占用8字节。<ul>
+<li>例：<code>float pi = 3.14;</code></li>
+</ul>
+</li>
+<li><strong>字符类型</strong> (<code>char</code>)：用于存储单个字符，占用1字节。<ul>
+<li>例：<code>char letter = &#39;A&#39;;</code></li>
+</ul>
+</li>
+</ul>
+<p>C语言允许使用<strong>修饰符</strong>来改变基本类型的特性，如：</p>
+<ul>
+<li><code>short</code>：表示短整型，减少内存占用；</li>
+<li><code>long</code>：表示长整型，增加数值范围；</li>
+<li><code>unsigned</code>：表示无符号类型，仅存储非负数。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">unsigned int positive_num = 100; // 无符号整数
+long long large_num = 1234567890; // 长整型
+</code></pre>
+<h2><span id="4-常量">4. <strong>常量</strong></span></h2><p>常量是指在程序运行期间其值不可改变的量。C语言通过 <code>const</code>关键字来声明常量。例如：</p>
+<pre><code class="lang-c">const int days_in_week = 7; // 一周的天数不会改变
+</code></pre>
+<h2><span id="5-基本输入输出">5. <strong>基本输入输出</strong></span></h2><ul>
+<li><strong>输出函数 <code>printf()</code></strong>：用于向屏幕输出信息，常见的占位符有：<ul>
+<li><code>%d</code>：输出整数；</li>
+<li><code>%f</code>：输出浮点数；</li>
+<li><code>%c</code>：输出字符；</li>
+<li><code>%s</code>：输出字符串。</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-c">printf(&quot;Integer: %d, Float: %.2f\n&quot;, 10, 3.1415);
+</code></pre>
+<ul>
+<li><strong>输入函数 <code>scanf()</code></strong>：用于从键盘读取输入，常见的格式符号与 <code>printf()</code>相似，使用 <code>&amp;</code>符号来获取变量的地址。</li>
+</ul>
+<pre><code class="lang-c">int num;
+scanf(&quot;%d&quot;, &amp;num); // 读取整数
+</code></pre>
+<h2><span id="6-运算符">6. <strong>运算符</strong></span></h2><p>C语言的运算符种类繁多，主要分为以下几类：</p>
+<ul>
+<li><strong>算术运算符</strong>：用于基本的数学运算，包括：<ul>
+<li><code>+</code>：加法；</li>
+<li><code>-</code>：减法；</li>
+<li><code>*</code>：乘法；</li>
+<li><code>/</code>：除法（整数除法时，结果为整数）；</li>
+<li><code>%</code>：取模运算（只适用于整数）。</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">int result = 10 % 3; // result = 1
+</code></pre>
+<ul>
+<li><strong>关系运算符</strong>：用于比较两个值，返回布尔结果（<code>1</code>表示真，<code>0</code>表示假）。<ul>
+<li><code>==</code>：等于；</li>
+<li><code>!=</code>：不等于；</li>
+<li><code>&gt;</code>：大于；</li>
+<li><code>&lt;</code>：小于；</li>
+<li><code>&gt;=</code>：大于等于；</li>
+<li><code>&lt;=</code>：小于等于。</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">if (a == b) &#123;
+    printf(&quot;a equals b&quot;);
+&#125;
+</code></pre>
+<ul>
+<li><strong>逻辑运算符</strong>：用于处理逻辑关系。<ul>
+<li><code>&amp;&amp;</code>：逻辑与，只有两个表达式都为真时，结果为真；</li>
+<li><code>||</code>：逻辑或，任一表达式为真，结果为真；</li>
+<li><code>!</code>：逻辑非，将表达式的结果取反。</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">if (a &gt; 0 &amp;&amp; b &gt; 0) &#123;
+    printf(&quot;Both a and b are positive numbers.&quot;);
+&#125;
+</code></pre>
+<h2><span id="7-条件控制结构">7. <strong>条件控制结构</strong></span></h2><p>C语言中的条件控制结构用于控制程序执行的流程，主要包括：</p>
+<ul>
+<li><strong>if语句</strong>：用于条件判断，当条件成立时执行特定代码块。</li>
+<li><strong>else语句</strong>：在 <code>if</code>条件不成立时执行。</li>
+<li><strong>else if语句</strong>：用于多条件判断。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">int num = 5;
+if (num &gt; 0) &#123;
+    printf(&quot;Positive number&quot;);
+&#125; else if (num == 0) &#123;
+    printf(&quot;Zero&quot;);
+&#125; else &#123;
+    printf(&quot;Negative number&quot;);
+&#125;
+</code></pre>
+<h2><span id="8-循环控制结构">8. <strong>循环控制结构</strong></span></h2><p>C语言提供了三种常用的循环结构：</p>
+<ul>
+<li><strong>for循环</strong>：常用于已知循环次数的情况。</li>
+</ul>
+<pre><code class="lang-c">for (int i = 0; i &lt; 5; i++) &#123;
+    printf(&quot;%d\n&quot;, i);
+&#125;
+</code></pre>
+<ul>
+<li><strong>while循环</strong>：在条件成立时重复执行代码块，适用于未知循环次数的情况。</li>
+</ul>
+<pre><code class="lang-c">int i = 0;
+while (i &lt; 5) &#123;
+    printf(&quot;%d\n&quot;, i);
+    i++;
+&#125;
+</code></pre>
+<ul>
+<li><strong>do…while循环</strong>：先执行一次代码块，然后在条件成立时继续循环。</li>
+</ul>
+<pre><code class="lang-c">int i = 0;
+do &#123;
+    printf(&quot;%d\n&quot;, i);
+    i++;
+&#125; while (i &lt; 5);
+</code></pre>
+<h2><span id="9-函数与作用域">9. <strong>函数与作用域</strong></span></h2><ul>
+<li><strong>函数</strong>是C语言中的重要组成部分，用于将代码逻辑封装成可重用的代码块。函数的声明和定义包括返回类型、函数名、参数列表和函数体。例如：</li>
+</ul>
+<pre><code class="lang-c">int add(int a, int b) &#123;
+    return a + b;
+&#125;
+</code></pre>
+<p>在调用函数时，参数会传递到函数内，函数执行完毕后将返回一个值。例如：</p>
+<pre><code class="lang-c">int result = add(5, 3); // result为8
+</code></pre>
+<ul>
+<li><strong>局部变量与全局变量</strong>：C语言中的变量分为局部变量和全局变量。局部变量是在函数或代码块内部声明的变量，只能在其定义的范围内使用；全局变量是在函数外部声明的，整个程序都可以访问。</li>
+</ul>
+<h1><span id="第二部分数组与字符串的详细介绍"><strong>第二部分：数组与字符串的详细介绍</strong></span></h1><p>在上一部分中，我们讲到了C语言的基本概念、控制结构和函数等内容。现在，我们将深入探讨C语言中的<strong>数组</strong>与<strong>字符串</strong>，它们是编程中用于处理多个数据的一些关键工具。</p>
+<h2><span id="1-数组概念">1. <strong>数组概念</strong></span></h2><p>数组是存储<strong>相同数据类型</strong>元素的<strong>连续内存块</strong>。它使得我们可以用同一个变量名来处理一组值，而不是为每个值都声明一个独立的变量。数组的元素通过下标（索引）进行访问，索引从 <code>0</code>开始。</p>
+<h3><span id="一维数组"><strong>一维数组</strong></span></h3><ul>
+<li>一维数组可以看作是一个线性的数据集合。其语法为：</li>
+</ul>
+<pre><code class="lang-c">data_type array_name[array_size];
+</code></pre>
+<p>例如，声明一个存储5个整数的数组：</p>
+<pre><code class="lang-c">int numbers[5]; // 创建一个包含5个整数的数组
+</code></pre>
+<p>我们可以通过下标来给数组元素赋值和访问元素：</p>
+<pre><code class="lang-c">numbers[0] = 10; // 给第一个元素赋值10
+int first_value = numbers[0]; // 获取第一个元素的值
+</code></pre>
+<p>也可以使用循环来遍历数组：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+
+int main() &#123;
+    int numbers[5] = &#123;1, 2, 3, 4, 5&#125;; // 初始化数组
+    for (int i = 0; i &lt; 5; i++) &#123;
+        printf(&quot;%d &quot;, numbers[i]); // 依次输出每个元素
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h3><span id="数组初始化"><strong>数组初始化</strong></span></h3><p>数组可以在声明时直接初始化，也可以在运行时赋值：</p>
+<ul>
+<li>静态初始化（在声明时指定初始值）：</li>
+</ul>
+<pre><code class="lang-c">int numbers[5] = &#123;1, 2, 3, 4, 5&#125;; // 初始化5个值
+</code></pre>
+<ul>
+<li>部分初始化时，未指定的元素会自动被初始化为 <code>0</code>：</li>
+</ul>
+<pre><code class="lang-c">int numbers[5] = &#123;1, 2&#125;; // 数组的剩余元素被初始化为0
+</code></pre>
+<h3><span id="多维数组"><strong>多维数组</strong></span></h3><p>C语言支持多维数组，常用的有二维数组。二维数组可以看作是一个<strong>矩阵</strong>，即行列形式的数据结构。声明语法如下：</p>
+<pre><code class="lang-c">data_type array_name[rows][cols];
+</code></pre>
+<p>例如：</p>
+<pre><code class="lang-c">int matrix[3][3]; // 3行3列的二维数组
+</code></pre>
+<p>二维数组的元素可以通过两个下标进行访问：</p>
+<pre><code class="lang-c">matrix[0][1] = 5; // 将第一行第二列的元素赋值为5
+</code></pre>
+<p>二维数组的遍历通常使用嵌套循环：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+
+int main() &#123;
+    int matrix[2][3] = &#123;&#123;1, 2, 3&#125;, &#123;4, 5, 6&#125;&#125;;
+    for (int i = 0; i &lt; 2; i++) &#123;
+        for (int j = 0; j &lt; 3; j++) &#123;
+            printf(&quot;%d &quot;, matrix[i][j]);
+        &#125;
+        printf(&quot;\n&quot;);
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>在上述例子中，<code>matrix[2][3]</code>是一个2行3列的数组，遍历时通过嵌套的 <code>for</code>循环访问每个元素。</p>
+<h2><span id="2-字符串">2. <strong>字符串</strong></span></h2><p>字符串在C语言中被视为<strong>字符数组</strong>。C语言中没有专门的字符串数据类型，因此字符串通常是一个以空字符 <code>\0</code> 结尾的字符数组。该空字符标志着字符串的结束，且不会被显示输出。</p>
+<h3><span id="字符串的声明与初始化"><strong>字符串的声明与初始化</strong></span></h3><p>字符串可以通过字符数组来声明，并且可以直接初始化为字符串常量：</p>
+<pre><code class="lang-c">char str[6] = &quot;Hello&quot;; // 自动在末尾添加&#39;\0&#39;
+</code></pre>
+<p>注意，这里的 <code>str</code>数组长度为6，因为 <code>&quot;Hello&quot;</code>有5个字符，加上末尾的空字符 <code>\0</code>总共6个字节。我们也可以手动初始化字符串：</p>
+<pre><code class="lang-c">char str[6] = &#123;&#39;H&#39;, &#39;e&#39;, &#39;l&#39;, &#39;l&#39;, &#39;o&#39;, &#39;\0&#39;&#125;; // 手动添加结束符
+</code></pre>
+<h3><span id="字符串输入输出"><strong>字符串输入输出</strong></span></h3><p>可以使用 <code>printf()</code>输出字符串，也可以使用 <code>scanf()</code>读取字符串。特别地，<code>scanf()</code>读取字符串时，不需要写 <code>&amp;</code>符号，因为字符串本质上是指针（稍后我们会详细讨论指针）。</p>
+<ul>
+<li>输出字符串：</li>
+</ul>
+<pre><code class="lang-c">printf(&quot;%s&quot;, str); // 输出字符串
+</code></pre>
+<ul>
+<li>输入字符串：</li>
+</ul>
+<pre><code class="lang-c">scanf(&quot;%s&quot;, str); // 从用户输入获取字符串
+</code></pre>
+<p>不过，使用 <code>scanf()</code>时有一个重要问题：它只能读取<strong>空格之前的内容</strong>，遇到空格会停止输入。如果需要读取包含空格的字符串，可以使用 <code>gets()</code>函数（已废弃，不推荐）或 <code>fgets()</code>函数：</p>
+<pre><code class="lang-c">fgets(str, sizeof(str), stdin); // 读取带有空格的输入
+</code></pre>
+<h3><span id="常用字符串处理函数"><strong>常用字符串处理函数</strong></span></h3><p>C语言的 <code>string.h</code>库提供了一系列处理字符串的函数，如：</p>
+<ul>
+<li><code>strlen()</code>：计算字符串长度。</li>
+<li><code>strcpy()</code>：复制字符串。</li>
+<li><code>strcat()</code>：拼接字符串。</li>
+<li><code>strcmp()</code>：比较两个字符串。</li>
+</ul>
+<p>示例：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() &#123;
+    char str1[20] = &quot;Hello&quot;;
+    char str2[20] = &quot;World&quot;;
+    strcat(str1, str2); // 将str2拼接到str1后
+    printf(&quot;%s\n&quot;, str1); // 输出&quot;HelloWorld&quot;
+    return 0;
+&#125;
+</code></pre>
+<h2><span id="3-数组与字符串的常见操作">3. <strong>数组与字符串的常见操作</strong></span></h2><h3><span id="数组与指针"><strong>数组与指针</strong></span></h3><p>在C语言中，数组名实际上是一个指向数组第一个元素的指针。我们可以通过指针运算来访问数组元素：</p>
+<pre><code class="lang-c">int arr[5] = &#123;1, 2, 3, 4, 5&#125;;
+int *p = arr; // p指向数组的第一个元素
+printf(&quot;%d\n&quot;, *(p + 1)); // 输出第二个元素的值，结果为2
+</code></pre>
+<h3><span id="字符串的常见问题"><strong>字符串的常见问题</strong></span></h3><ul>
+<li><strong>数组越界</strong>：如果字符串数组的大小不足以容纳字符串和结束符 <code>\0</code>，可能会导致内存越界的问题。因此在声明字符串数组时要确保有足够的空间。</li>
+<li><strong>空字符问题</strong>：字符串末尾必须有一个 <code>\0</code>，否则可能导致程序在输出或操作字符串时出现错误或崩溃。</li>
+</ul>
+<h2><span id="4-字符串与数组的区别">4. <strong>字符串与数组的区别</strong></span></h2><p>尽管字符串是以字符数组的形式存在，但处理方式上仍有细微的区别：</p>
+<ul>
+<li>字符数组可以包含任意字符，不必以 <code>\0</code>结尾；</li>
+<li>字符串必须以 <code>\0</code>结尾，<code>printf</code>等函数遇到 <code>\0</code>时才会停止输出。</li>
+</ul>
+<h1><span id="第三部分指针详解"><strong>第三部分：指针详解</strong></span></h1><p>在前面的部分，我们讨论了数组和字符串，并简要提到了指针的概念。现在我们将深入讨论<strong>指针</strong>，这是C语言中最强大、但也最难掌握的概念之一。指针在C语言中的作用非常重要，尤其是在处理内存、数组、函数参数和动态分配内存时。</p>
+<h2><span id="1-指针的基本概念">1. <strong>指针的基本概念</strong></span></h2><p>指针是<strong>存储另一个变量的地址</strong>的变量。也就是说，指针指向存储在内存中的一个特定位置，而这个位置存储了某个值。通过指针，可以间接地访问和修改存储在该位置的值。</p>
+<h3><span id="指针声明"><strong>指针声明</strong></span></h3><p>在C语言中，指针通过类型名和一个星号（<code>*</code>）声明。它的基本语法为：</p>
+<pre><code class="lang-c">data_type *pointer_name;
+</code></pre>
+<ul>
+<li><code>data_type</code>：指针所指向的变量的类型，例如 <code>int</code>, <code>float</code>等。</li>
+<li><code>pointer_name</code>：指针变量的名称。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">int *p;  // 声明一个指向整数的指针p
+</code></pre>
+<h3><span id="指针的地址和解引用"><strong>指针的地址和解引用</strong></span></h3><ul>
+<li><strong>&amp;运算符</strong>：取地址运算符，返回变量的内存地址。</li>
+<li><strong>*运算符</strong>：解引用运算符，返回指针指向的变量的值。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">int a = 10;
+int *p = &amp;a;  // p存储变量a的地址
+printf(&quot;Address of a: %p\n&quot;, p); // 输出变量a的地址
+printf(&quot;Value of a: %d\n&quot;, *p);  // 通过指针访问变量a的值，结果为10
+</code></pre>
+<p>在这个例子中，<code>p</code>存储了 <code>a</code>的地址，而 <code>*p</code>则访问 <code>a</code>的值。</p>
+<h2><span id="2-指针与数组的关系">2. <strong>指针与数组的关系</strong></span></h2><p>在C语言中，数组名实际上就是一个<strong>指向数组第一个元素的指针</strong>。因此，指针和数组之间有非常密切的关系。</p>
+<p>例如：</p>
+<pre><code class="lang-c">int arr[3] = &#123;10, 20, 30&#125;;
+int *p = arr; // p指向数组的第一个元素
+
+printf(&quot;%d\n&quot;, *p);    // 输出10，相当于arr[0]
+printf(&quot;%d\n&quot;, *(p+1)); // 输出20，相当于arr[1]
+</code></pre>
+<p>这里，<code>p</code>指向 <code>arr[0]</code>，<code>p + 1</code>指向 <code>arr[1]</code>，通过解引用 <code>*(p+1)</code>可以访问数组的第二个元素。</p>
+<p><strong>总结指针与数组的关系</strong>：</p>
+<ul>
+<li><code>arr</code>实际上是一个指向 <code>arr[0]</code>的指针；</li>
+<li><code>arr[i]</code>等价于 <code>*(arr + i)</code>；</li>
+<li>指针可以通过指针运算遍历数组。</li>
+</ul>
+<h2><span id="3-指针与函数">3. <strong>指针与函数</strong></span></h2><p>在C语言中，指针与函数有着紧密的关系。通过指针，我们可以实现以下两种主要功能：</p>
+<ul>
+<li><strong>函数参数传递</strong>：通过传递指针，可以使得函数内部对传递参数的修改在函数外部生效。</li>
+<li><strong>指向函数的指针</strong>：通过指针来引用和调用函数。</li>
+</ul>
+<h3><span id="通过指针传递参数"><strong>通过指针传递参数</strong></span></h3><p>C语言中函数的参数传递是<strong>值传递</strong>，也就是说，函数接收到的是参数的副本。如果希望函数修改原始参数，可以通过指针来传递参数的地址。</p>
+<p>例如：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) &#123;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+&#125;
+
+int main() &#123;
+    int x = 5, y = 10;
+    swap(&amp;x, &amp;y);  // 传递x和y的地址
+    printf(&quot;x = %d, y = %d\n&quot;, x, y);  // 输出：x = 10, y = 5
+    return 0;
+&#125;
+</code></pre>
+<p>在这个例子中，<code>swap</code>函数通过指针修改了 <code>x</code>和 <code>y</code>的值，使得函数外的 <code>x</code>和 <code>y</code>被交换。</p>
+<h3><span id="函数指针"><strong>函数指针</strong></span></h3><p>指针不仅可以指向变量，还可以指向<strong>函数</strong>。一个函数指针可以存储某个函数的地址，并通过这个指针调用该函数。</p>
+<p>函数指针的声明语法如下：</p>
+<pre><code class="lang-c">return_type (*pointer_name)(parameter_types);
+</code></pre>
+<p>例如，声明一个指向返回 <code>int</code>类型、接受两个 <code>int</code>参数的函数指针：</p>
+<pre><code class="lang-c">int (*func_ptr)(int, int);
+</code></pre>
+<p>我们可以将一个函数的地址赋给函数指针，并通过指针调用该函数：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+
+int add(int a, int b) &#123;
+    return a + b;
+&#125;
+
+int main() &#123;
+    int (*func_ptr)(int, int) = add;  // 将函数add的地址赋给指针
+    int result = func_ptr(3, 4);  // 通过指针调用函数
+    printf(&quot;Result: %d\n&quot;, result);  // 输出：Result: 7
+    return 0;
+&#125;
+</code></pre>
+<h2><span id="4-指针的分类">4. <strong>指针的分类</strong></span></h2><p>指针在C语言中有多个分类，每种指针类型在不同的场景下使用。以下是几种常见的指针类型：</p>
+<h3><span id="空指针null指针"><strong>空指针（NULL指针）</strong></span></h3><p>空指针是指向<strong>“无效”地址</strong>的指针。通常将一个指针赋值为 <code>NULL</code>来表明它不指向任何有效的内存地址。在实际编程中，空指针常用于指针初始化或检查指针是否有效。</p>
+<pre><code class="lang-c">int *p = NULL; // p不指向任何有效地址
+</code></pre>
+<p>使用空指针可以避免一些未初始化指针带来的错误。</p>
+<h3><span id="悬空指针"><strong>悬空指针</strong></span></h3><p>悬空指针是指一个指针指向了被释放或不存在的内存地址。它是造成<strong>内存访问错误</strong>的常见原因。为了避免悬空指针，在释放动态分配的内存后，应该将指针设为 <code>NULL</code>。</p>
+<pre><code class="lang-c">int *p = (int *)malloc(sizeof(int)); // 动态分配内存
+free(p);  // 释放内存
+p = NULL;  // 避免悬空指针
+</code></pre>
+<h3><span id="野指针"><strong>野指针</strong></span></h3><p>野指针指的是指向未知地址或非法内存地址的指针。野指针的行为是不可预料的，可能导致程序崩溃或产生未定义的行为。在使用指针时，要确保指针指向合法的内存区域。</p>
+<h2><span id="5-指针与动态内存管理">5. <strong>指针与动态内存管理</strong></span></h2><p>C语言提供了一套标准库函数来进行<strong>动态内存分配</strong>，它们包括：</p>
+<ul>
+<li><code>malloc()</code>：分配指定大小的内存块，返回指向该内存块的指针。如果分配失败，返回 <code>NULL</code>。</li>
+<li><code>calloc()</code>：与 <code>malloc()</code>类似，但会初始化分配的内存为0。</li>
+<li><code>free()</code>：释放之前用 <code>malloc()</code>或 <code>calloc()</code>分配的内存块。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() &#123;
+    int *p = (int *)malloc(5 * sizeof(int)); // 分配5个int大小的内存
+    if (p == NULL) &#123;
+        printf(&quot;Memory allocation failed\n&quot;);
+        return 1;
+    &#125;
+
+    // 初始化数组
+    for (int i = 0; i &lt; 5; i++) &#123;
+        p[i] = i * 10;
+    &#125;
+
+    // 输出数组内容
+    for (int i = 0; i &lt; 5; i++) &#123;
+        printf(&quot;%d &quot;, p[i]);
+    &#125;
+
+    free(p);  // 释放内存
+    return 0;
+&#125;
+</code></pre>
+<p>在这个例子中，<code>malloc</code>函数分配了足够存储5个整数的内存空间，并通过指针 <code>p</code>访问和操作这些内存。</p>
+<h2><span id="6-指针的常见错误">6. <strong>指针的常见错误</strong></span></h2><ul>
+<li><strong>未初始化的指针</strong>：指针在使用前必须初始化。如果未初始化就使用指针，可能会导致程序崩溃或产生不确定的行为。</li>
+<li><strong>内存泄漏</strong>：使用 <code>malloc</code>或 <code>calloc</code>动态分配内存后，必须使用 <code>free</code>释放内存，否则会导致内存泄漏。</li>
+<li><strong>解引用空指针</strong>：解引用空指针会导致程序崩溃。在解引用指针之前，必须确保指针指向有效的内存区域。</li>
+</ul>
+<h1><span id="第四部分结构体-联合体与指针的结合使用"><strong>第四部分：结构体、联合体与指针的结合使用</strong></span></h1><p>在上一部分中，我们深入讨论了C语言中的指针。现在我们继续探讨<strong>结构体</strong>和<strong>联合体</strong>，并进一步学习它们如何与指针结合使用。在C语言中，结构体和联合体是非常重要的数据类型，常用于定义复杂的数据结构，例如链表、树等。</p>
+<h2><span id="1-结构体struct">1. <strong>结构体（Struct）</strong></span></h2><p>结构体是一种用户自定义的数据类型，它允许将不同类型的变量组合成一个单一的实体。结构体特别适合用于描述复杂的对象或记录，例如描述一名学生的学号、姓名和成绩等信息。</p>
+<h3><span id="结构体的声明"><strong>结构体的声明</strong></span></h3><p>结构体的声明格式如下：</p>
+<pre><code class="lang-c">struct structure_name &#123;
+    data_type1 member1;
+    data_type2 member2;
+    ...
+&#125;;
+</code></pre>
+<p>例如，定义一个表示学生信息的结构体：</p>
+<pre><code class="lang-c">struct Student &#123;
+    int id;        // 学号
+    char name[50]; // 姓名
+    float grade;   // 成绩
+&#125;;
+</code></pre>
+<h3><span id="结构体变量的定义与访问"><strong>结构体变量的定义与访问</strong></span></h3><p>定义结构体变量时，可以使用结构体名称。例如：</p>
+<pre><code class="lang-c">struct Student s1; // 定义结构体变量s1
+</code></pre>
+<p>访问结构体的成员时使用点运算符（<code>.</code>）：</p>
+<pre><code class="lang-c">s1.id = 1001;
+strcpy(s1.name, &quot;Alice&quot;); // 将字符串&quot; Alice&quot;复制到name成员
+s1.grade = 95.5;
+</code></pre>
+<p>通过这种方式，我们可以操作和访问结构体中的各个成员。</p>
+<h3><span id="结构体初始化"><strong>结构体初始化</strong></span></h3><p>结构体变量可以在声明时初始化：</p>
+<pre><code class="lang-c">struct Student s1 = &#123;1001, &quot;Alice&quot;, 95.5&#125;;
+</code></pre>
+<h3><span id="结构体数组"><strong>结构体数组</strong></span></h3><p>与基本类型数组类似，我们可以定义结构体数组来存储多个结构体变量。例如，定义一个存储多名学生信息的结构体数组：</p>
+<pre><code class="lang-c">struct Student students[3] = &#123;
+    &#123;1001, &quot;Alice&quot;, 95.5&#125;,
+    &#123;1002, &quot;Bob&quot;, 89.0&#125;,
+    &#123;1003, &quot;Charlie&quot;, 92.3&#125;
+&#125;;
+</code></pre>
+<h2><span id="2-结构体与指针">2. <strong>结构体与指针</strong></span></h2><p>指针可以与结构体结合使用，以更高效地操作结构体，尤其是在函数参数传递和动态内存分配时。</p>
+<h3><span id="结构体指针的声明"><strong>结构体指针的声明</strong></span></h3><p>结构体指针的声明与普通指针相同，只是类型为结构体类型。例如，声明一个指向 <code>Student</code>结构体的指针：</p>
+<pre><code class="lang-c">struct Student *p;
+</code></pre>
+<p>我们可以让指针 <code>p</code>指向某个结构体变量的地址：</p>
+<pre><code class="lang-c">p = &amp;s1; // p指向结构体变量s1的地址
+</code></pre>
+<h3><span id="通过指针访问结构体成员"><strong>通过指针访问结构体成员</strong></span></h3><p>通过指针访问结构体成员时，不能直接使用点运算符，而是使用箭头运算符（<code>-&gt;</code>）。例如：</p>
+<pre><code class="lang-c">printf(&quot;ID: %d\n&quot;, p-&gt;id);       // 访问结构体成员id
+printf(&quot;Name: %s\n&quot;, p-&gt;name);   // 访问结构体成员name
+printf(&quot;Grade: %.2f\n&quot;, p-&gt;grade); // 访问结构体成员grade
+</code></pre>
+<p>这种方式避免了结构体的大量复制，特别是在传递结构体作为函数参数时，指针更加高效。</p>
+<h3><span id="结构体指针与动态内存分配"><strong>结构体指针与动态内存分配</strong></span></h3><p>结构体指针可以与 <code>malloc()</code>函数结合，动态分配结构体内存。例如：</p>
+<pre><code class="lang-c">struct Student *p = (struct Student *)malloc(sizeof(struct Student)); // 动态分配结构体内存
+if (p != NULL) &#123;
+    p-&gt;id = 1004;
+    strcpy(p-&gt;name, &quot;David&quot;);
+    p-&gt;grade = 88.5;
+&#125;
+</code></pre>
+<p>分配完成后，可以像普通结构体指针一样操作和访问结构体成员，使用完成后需要记得释放内存：</p>
+<pre><code class="lang-c">free(p); // 释放内存
+</code></pre>
+<h2><span id="3-联合体union">3. <strong>联合体（Union）</strong></span></h2><p><strong>联合体</strong>与结构体类似，也是一种自定义的数据类型，但它允许多个成员共用同一块内存空间。联合体中的所有成员<strong>共享同一个内存地址</strong>，因此在某一时刻，联合体只能存储一个成员的值。</p>
+<h3><span id="联合体的声明"><strong>联合体的声明</strong></span></h3><p>联合体的声明格式与结构体类似：</p>
+<pre><code class="lang-c">union UnionName &#123;
+    data_type1 member1;
+    data_type2 member2;
+    ...
+&#125;;
+</code></pre>
+<p>例如：</p>
+<pre><code class="lang-c">union Data &#123;
+    int i;
+    float f;
+    char str[20];
+&#125;;
+</code></pre>
+<h3><span id="联合体的使用"><strong>联合体的使用</strong></span></h3><p>定义联合体变量时，可以像结构体一样操作。因为所有成员共享同一块内存，修改一个成员的值会覆盖其他成员的值：</p>
+<pre><code class="lang-c">union Data d;
+d.i = 10;
+printf(&quot;d.i = %d\n&quot;, d.i); // 输出：d.i = 10
+
+d.f = 3.14;
+printf(&quot;d.f = %.2f\n&quot;, d.f); // 输出：d.f = 3.14
+printf(&quot;d.i = %d\n&quot;, d.i);   // 输出的d.i值可能是未定义的，因为d.f覆盖了内存
+</code></pre>
+<h3><span id="联合体的大小"><strong>联合体的大小</strong></span></h3><p>由于联合体的所有成员共享同一个内存，因此联合体的大小等于<strong>它所有成员中最大类型的大小</strong>。例如：</p>
+<pre><code class="lang-c">union Data d;
+printf(&quot;Size of union: %ld\n&quot;, sizeof(d)); // 输出联合体的大小，取决于成员中最大的类型
+</code></pre>
+<h2><span id="4-结构体与联合体的比较">4. <strong>结构体与联合体的比较</strong></span></h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>结构体</th>
+<th>联合体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内存分配</td>
+<td>每个成员都有独立的内存空间</td>
+<td>所有成员共享同一块内存</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>需要同时存储多个不同类型的数据</td>
+<td>需要节省内存且一次只使用一个成员</td>
+</tr>
+<tr>
+<td>成员访问</td>
+<td>可以同时访问多个成员</td>
+<td>只能访问最后一次赋值的成员</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>总大小等于所有成员的大小之和</td>
+<td>大小等于最大成员的大小</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2><span id="5-嵌套结构体">5. <strong>嵌套结构体</strong></span></h2><p>在C语言中，结构体可以嵌套，即一个结构体的成员可以是另一个结构体。例如：</p>
+<pre><code class="lang-c">struct Date &#123;
+    int day;
+    int month;
+    int year;
+&#125;;
+
+struct Student &#123;
+    int id;
+    char name[50];
+    struct Date birthdate; // 嵌套Date结构体
+&#125;;
+</code></pre>
+<p>通过这种方式，可以创建更复杂的数据结构。例如：</p>
+<pre><code class="lang-c">struct Student s1;
+s1.id = 1001;
+strcpy(s1.name, &quot;Alice&quot;);
+s1.birthdate.day = 15;
+s1.birthdate.month = 6;
+s1.birthdate.year = 2000;
+</code></pre>
+<h2><span id="6-指向结构体数组的指针">6. <strong>指向结构体数组的指针</strong></span></h2><p>指针不仅可以指向单个结构体变量，还可以指向结构体数组。例如：</p>
+<pre><code class="lang-c">struct Student students[3];
+struct Student *p = students; // p指向结构体数组的第一个元素
+</code></pre>
+<p>可以通过指针和下标一起操作结构体数组：</p>
+<pre><code class="lang-c">for (int i = 0; i &lt; 3; i++) &#123;
+    p[i].id = i + 1001; // 通过指针访问数组元素
+&#125;
+</code></pre>
+<h2><span id="7-位域bit-fields">7. <strong>位域（Bit Fields）</strong></span></h2><p>位域是一种特殊的结构体成员，用于控制某个成员占用的比特位数。位域用于节省内存空间，通常在需要精确控制内存分配的情况下使用，例如嵌入式系统中。</p>
+<h3><span id="位域的声明"><strong>位域的声明</strong></span></h3><p>位域声明时，需要指定成员占用的位数：</p>
+<pre><code class="lang-c">struct &#123;
+    unsigned int a : 4; // a占用4位
+    unsigned int b : 4; // b占用4位
+&#125; bitField;
+</code></pre>
+<p>在这个例子中，<code>a</code>和 <code>b</code>各占用4位，总共占用1个字节。</p>
+<h1><span id="第五部分文件操作与预处理器指令"><strong>第五部分：文件操作与预处理器指令</strong></span></h1><p>在前面四部分的基础上，本部分将讨论<strong>文件操作</strong>和<strong>预处理器指令</strong>，它们是C语言编程中非常实用且重要的功能。文件操作使得程序可以读写外部文件，而预处理器指令则帮助程序员更灵活地管理代码和进行条件编译。</p>
+<h2><span id="1-文件操作">1. <strong>文件操作</strong></span></h2><p>文件操作是指通过程序与外部文件进行交互，比如读取文件内容或向文件中写入数据。C语言中，文件操作主要通过标准库函数来实现，这些函数定义在 <code>stdio.h</code>头文件中。</p>
+<h3><span id="文件指针"><strong>文件指针</strong></span></h3><p>在C语言中，文件通过<strong>文件指针</strong>进行操作。<code>FILE</code>类型是一个结构体，表示文件流，而 <code>FILE *</code>则是文件指针，用来引用和操作文件。</p>
+<pre><code class="lang-c">FILE *file_pointer;
+</code></pre>
+<h3><span id="打开和关闭文件"><strong>打开和关闭文件</strong></span></h3><p>使用 <code>fopen()</code>函数来打开文件，并返回一个 <code>FILE *</code>指针。如果文件打开失败，<code>fopen()</code>会返回 <code>NULL</code>。其基本语法如下：</p>
+<pre><code class="lang-c">FILE *fopen(const char *filename, const char *mode);
+</code></pre>
+<ul>
+<li><code>filename</code>：文件名。</li>
+<li><code>mode</code>：文件打开模式，有以下几种常见模式：<ul>
+<li><code>&quot;r&quot;</code>：以只读模式打开文件，文件必须存在。</li>
+<li><code>&quot;w&quot;</code>：以写入模式打开文件，若文件不存在则创建，若文件存在则清空文件内容。</li>
+<li><code>&quot;a&quot;</code>：以追加模式打开文件，文件必须存在。</li>
+<li><code>&quot;r+&quot;</code>：以读写模式打开文件，文件必须存在。</li>
+<li><code>&quot;w+&quot;</code>：以读写模式打开文件，若文件不存在则创建，若文件存在则清空文件内容。</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">FILE *fp = fopen(&quot;data.txt&quot;, &quot;r&quot;); // 打开文件data.txt用于读取
+if (fp == NULL) &#123;
+    printf(&quot;Error: Could not open file.\n&quot;);
+&#125;
+</code></pre>
+<p>当操作完文件后，必须使用 <code>fclose()</code>函数关闭文件，以释放系统资源：</p>
+<pre><code class="lang-c">fclose(fp);
+</code></pre>
+<h3><span id="读写文件"><strong>读写文件</strong></span></h3><p>C语言提供了多种函数用于文件的读写操作，包括单字符、字符串和格式化数据的读写。</p>
+<h2><span id="字符读写"><strong>字符读写</strong></span></h2><ul>
+<li><code>fgetc()</code>：从文件中读取一个字符。</li>
+<li><code>fputc()</code>：将一个字符写入文件。</li>
+</ul>
+<pre><code class="lang-c">char ch = fgetc(fp); // 从文件中读取一个字符
+fputc(&#39;A&#39;, fp);      // 向文件写入字符&#39;A&#39;
+</code></pre>
+<h2><span id="字符串读写"><strong>字符串读写</strong></span></h2><ul>
+<li><code>fgets()</code>：从文件中读取一行字符串，最多读取 <code>n-1</code>个字符（<code>n</code>是指定的大小），并在末尾添加 <code>&#39;\0&#39;</code>。</li>
+<li><code>fputs()</code>：向文件写入一个字符串。</li>
+</ul>
+<pre><code class="lang-c">char buffer[100];
+fgets(buffer, 100, fp);  // 从文件中读取一行，存储在buffer中
+fputs(&quot;Hello, World!&quot;, fp); // 向文件写入字符串
+</code></pre>
+<h2><span id="格式化读写"><strong>格式化读写</strong></span></h2><ul>
+<li><code>fprintf()</code>：将格式化的数据写入文件。</li>
+<li><code>fscanf()</code>：从文件中读取格式化的数据。</li>
+</ul>
+<pre><code class="lang-c">fprintf(fp, &quot;ID: %d, Name: %s\n&quot;, 1001, &quot;Alice&quot;); // 向文件写入格式化数据
+fscanf(fp, &quot;%d %s&quot;, &amp;id, name); // 从文件中读取格式化数据
+</code></pre>
+<h2><span id="二进制文件操作"><strong>二进制文件操作</strong></span></h2><p>对于需要精确控制数据格式的场景，C语言提供了二进制文件的读写函数：</p>
+<ul>
+<li><code>fread()</code>：从文件中读取二进制数据。</li>
+<li><code>fwrite()</code>：向文件中写入二进制数据。</li>
+</ul>
+<pre><code class="lang-c">int arr[5] = &#123;1, 2, 3, 4, 5&#125;;
+fwrite(arr, sizeof(int), 5, fp);  // 写入5个整数到文件中
+
+fread(arr, sizeof(int), 5, fp);   // 从文件中读取5个整数
+</code></pre>
+<h3><span id="文件定位"><strong>文件定位</strong></span></h3><p>文件定位函数用于在文件中移动读写指针：</p>
+<ul>
+<li><code>fseek()</code>：将文件指针移动到指定位置。</li>
+<li><code>ftell()</code>：返回文件指针的当前偏移量。</li>
+<li><code>rewind()</code>：将文件指针重置到文件开头。</li>
+</ul>
+<pre><code class="lang-c">fseek(fp, 0, SEEK_SET);  // 移动到文件开头
+long position = ftell(fp);  // 获取当前指针位置
+rewind(fp);  // 重置到文件开头
+</code></pre>
+<h2><span id="2-预处理器指令">2. <strong>预处理器指令</strong></span></h2><p>预处理器指令是由<strong><code>#</code></strong>号开头的指令，它们在编译器编译代码之前执行预处理工作。常见的预处理器指令包括文件包含、宏定义、条件编译等。</p>
+<h3><span id="include文件包含"><strong><code>#include</code>：文件包含</strong></span></h3><p><code>#include</code>指令用于将外部文件的内容包含到当前文件中。常见的有两种包含形式：</p>
+<ul>
+<li><strong>尖括号形式</strong>：用于包含标准库文件。</li>
+</ul>
+<pre><code class="lang-c">#include &lt;stdio.h&gt;
+</code></pre>
+<ul>
+<li><strong>双引号形式</strong>：用于包含用户自定义的头文件。</li>
+</ul>
+<pre><code class="lang-c">#include &quot;myheader.h&quot;
+</code></pre>
+<h3><span id="define宏定义"><strong><code>#define</code>：宏定义</strong></span></h3><p>宏定义用于定义常量或简单的函数。在预处理阶段，所有宏的使用都会被替换为定义的内容。</p>
+<ul>
+<li>定义常量：</li>
+</ul>
+<pre><code class="lang-c">#define PI 3.14159
+</code></pre>
+<p>使用 <code>PI</code>时，编译器会将其替换为 <code>3.14159</code>。</p>
+<ul>
+<li>宏函数：</li>
+</ul>
+<pre><code class="lang-c">#define SQUARE(x) ((x) * (x))
+</code></pre>
+<p>使用 <code>SQUARE(5)</code>时，编译器会将其替换为 <code>((5) * (5))</code>。</p>
+<h3><span id="条件编译"><strong>条件编译</strong></span></h3><p>条件编译指令用于控制代码的编译行为，允许编译器根据条件选择性地编译某些代码。</p>
+<ul>
+<li><code>#if</code>、<code>#elif</code>、<code>#else</code>、<code>#endif</code>：根据条件选择性地编译代码。</li>
+</ul>
+<pre><code class="lang-c">#define DEBUG 1
+
+#if DEBUG
+    printf(&quot;Debug mode is on.\n&quot;);
+#else
+    printf(&quot;Release mode is on.\n&quot;);
+#endif
+</code></pre>
+<ul>
+<li><code>#ifdef</code>和 <code>#ifndef</code>：判断某个宏是否被定义。</li>
+</ul>
+<pre><code class="lang-c">#ifdef PI
+    printf(&quot;PI is defined.\n&quot;);
+#endif
+
+#ifndef PI
+    printf(&quot;PI is not defined.\n&quot;);
+#endif
+</code></pre>
+<h3><span id="undef取消宏定义"><strong><code>#undef</code>：取消宏定义</strong></span></h3><p>使用 <code>#undef</code>可以取消某个宏的定义：</p>
+<pre><code class="lang-c">#undef PI
+</code></pre>
+<h3><span id="pragma特殊指令"><strong><code>#pragma</code>：特殊指令</strong></span></h3><p><code>#pragma</code>指令是编译器特定的指令，用于设置编译器的特性。例如：</p>
+<pre><code class="lang-c">#pragma pack(1)  // 设置结构体成员的对齐方式为1字节
+</code></pre>
+<h2><span id="3-宏与内联函数的区别">3. <strong>宏与内联函数的区别</strong></span></h2><ul>
+<li>宏在预处理阶段展开，不执行类型检查，可能会导致意外的错误。</li>
+<li>内联函数在编译时替换成函数代码，执行类型检查，通常比宏更安全。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="lang-c">#define MAX(a, b) ((a) &gt; (b) ? (a) : (b)) // 宏
+inline int max(int a, int b) &#123; return (a &gt; b) ? a : b; &#125; // 内联函数
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 左岚の秘密基地
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;左岚
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+    <script>
+        fetch('https://v1.hitokoto.cn/?c=i&c=b&c=e&c=d&c=j') //此处c=i表示获取诗词类型，其他类型查看https://developer.hitokoto.cn/sentence/，找到所需要的类型，如文学，改成https://v1.hitokoto.cn/?c=d即可
+            .then(function (res){
+            return res.json();
+        })
+            .then(function (data) {
+            var hitokoto = document.getElementById('hitokoto'); 
+            hitokoto.innerText = data.hitokoto;//获取正文
+            var hitoauthor = document.getElementById('hitoauthor');
+            hitoauthor.innerText = "——" + data.from_who; // 获取作者
+            var hitofrom = document.getElementById('hitofrom');
+            hitofrom.innerText = "《" + data.from + '\xa0》'; //获取来源作品
+        })
+            .catch(function (err) {
+            console.error(err);
+        })
+    </script>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <canvas
+    id="fireworks"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 32767"
+></canvas>
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+<script src="/js/fireworks.min.js"></script>
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="zuoliangyu/zuolan_blog_discussed"
+    data-repo-id="R_kgDOMuHi2A"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMuHi2M4CiRh2"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
