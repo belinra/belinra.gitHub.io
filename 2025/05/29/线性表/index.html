@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
   
   <title>
-    关于 |
+    线性表 |
     
     彩虹海
   </title>
@@ -35,19 +35,16 @@
 
   
   
-    <meta name="description" content="关于">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://example.com/about/index.html">
+    <meta property="og:type" content="article">
+<meta property="og:title" content="线性表">
+<meta property="og:url" content="http://example.com/2025/05/29/%E7%BA%BF%E6%80%A7%E8%A1%A8/index.html">
 <meta property="og:site_name" content="彩虹海">
-<meta property="og:description" content="关于">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/banner.webp">
-<meta property="article:published_time" content="2021-09-22T13:01:47.000Z">
-<meta property="article:modified_time" content="2025-05-23T15:12:49.620Z">
+<meta property="article:published_time" content="2025-05-29T10:04:17.000Z">
+<meta property="article:modified_time" content="2025-05-29T10:05:04.416Z">
 <meta property="article:author" content="Belinra">
+<meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/banner.webp">
   
   
     <link rel="alternate" href="/atom.xml" title="彩虹海" type="application/atom+xml">
@@ -186,11 +183,13 @@
 <header id="header">
   
     
-      <picture>
-        
-      </picture>
       
-        <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="关于">
+        <picture>
+          
+        </picture>
+        
+          <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="线性表">
+        
       
     
   
@@ -200,7 +199,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">关于</h1>
+            <h1 data-aos="slide-up">线性表</h1>
           </a>
         
       
@@ -219,10 +218,20 @@
   
   
   
-  <div class="sidebar-wrapper ">
+  <div class="sidebar-wrapper wrap-sticky">
     <div class="sidebar-wrap" data-aos="fade-up">
       
-        <div class="sidebar-author">
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -289,8 +298,16 @@
     
   
 </div>
-
+</div>
+        
       
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
       
     </div>
   </div>
@@ -301,17 +318,21 @@
   
 </aside>
 
-          <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-线性表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2021-09-22T13:01:47.000Z" itemprop="datePublished">2021-09-22</time>
-    <time style="display: none;" id="post-update-time">2025-05-23</time>
+    <time datetime="2025-05-29T10:04:17.000Z" itemprop="datePublished">2025-05-29</time>
+    <time style="display: none;" id="post-update-time">2025-05-29</time>
   </span>
 </div>
 
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/408/" data-aos="zoom-in">408</a>
+  </div>
+
 
     </div>
     <div class="hr-line"></div>
@@ -320,7 +341,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <h2 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h2>
+        
       
     </div>
     <footer class="article-footer">
@@ -333,10 +354,51 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
 
     </footer>
   </div>
   
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/5.png" data-sizes="auto" alt="作文模板" class="lazyload">
+          
+        
+        <a href="/2025/05/31/%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            作文模板
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/7.png" data-sizes="auto" alt="句子基本成分" class="lazyload">
+        
+      
+      <a href="/2025/05/27/%E5%8F%A5%E5%AD%90%E5%9F%BA%E6%9C%AC%E6%88%90%E5%88%86/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          句子基本成分
+        
+      </h3>
+    </div>
+    
+  </nav>
+
 
 </article>
 
@@ -407,7 +469,17 @@
       <nav id="mobile-nav">
   <div class="sidebar-wrap">
     
-      <div class="sidebar-author">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -474,9 +546,17 @@
     
   
 </div>
-
+</div>
+      
     
   </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
   
 </nav>
 
@@ -555,13 +635,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Belinra",
-          title: "关于",
-          url: "http://example.com/about/index.html",
+          title: "线性表",
+          url: "http://example.com/2025/05/29/%E7%BA%BF%E6%80%A7%E8%A1%A8/",
           excerpt: "",
           description: "",
-          stripContent: "关于",
-          date: "Wed Sep 22 2021 21:01:47 GMT+0800",
-          updated: "Fri May 23 2025 23:12:49 GMT+0800",
+          stripContent: "",
+          date: "Thu May 29 2025 18:04:17 GMT+0800",
+          updated: "Thu May 29 2025 18:05:04 GMT+0800",
           cover: "/images/banner.webp",
         };
       </script>

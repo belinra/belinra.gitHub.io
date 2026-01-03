@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
   
   <title>
-    关于 |
+    数据结构概述 |
     
     彩虹海
   </title>
@@ -35,19 +35,18 @@
 
   
   
-    <meta name="description" content="关于">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://example.com/about/index.html">
+    <meta name="description" content="一、概述基本概念（以一份excel表格为例） 数据  有含义的数字、字符及符号（要求能被计算机识别和处理）的集合。 也即整份 excel 中的全部内容   数据元素  数据的基本单位 由若干数据项组成 通常作为一个整体进行考虑和处理 也即 excel 表中的一行   数据项  构成数据元素的不可分割的最小单位 也即 excel 表中的一个单元格   数据对象  具有相同性质的数据元素的集合 是数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构概述">
+<meta property="og:url" content="http://example.com/2025/05/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="彩虹海">
-<meta property="og:description" content="关于">
+<meta property="og:description" content="一、概述基本概念（以一份excel表格为例） 数据  有含义的数字、字符及符号（要求能被计算机识别和处理）的集合。 也即整份 excel 中的全部内容   数据元素  数据的基本单位 由若干数据项组成 通常作为一个整体进行考虑和处理 也即 excel 表中的一行   数据项  构成数据元素的不可分割的最小单位 也即 excel 表中的一个单元格   数据对象  具有相同性质的数据元素的集合 是数据">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/banner.webp">
-<meta property="article:published_time" content="2021-09-22T13:01:47.000Z">
-<meta property="article:modified_time" content="2025-05-23T15:12:49.620Z">
+<meta property="article:published_time" content="2025-05-25T01:17:46.000Z">
+<meta property="article:modified_time" content="2025-06-01T14:23:34.698Z">
 <meta property="article:author" content="Belinra">
+<meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/banner.webp">
   
   
     <link rel="alternate" href="/atom.xml" title="彩虹海" type="application/atom+xml">
@@ -186,11 +185,13 @@
 <header id="header">
   
     
-      <picture>
-        
-      </picture>
       
-        <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="关于">
+        <picture>
+          
+        </picture>
+        
+          <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="数据结构概述">
+        
       
     
   
@@ -200,7 +201,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">关于</h1>
+            <h1 data-aos="slide-up">数据结构概述</h1>
           </a>
         
       
@@ -219,10 +220,20 @@
   
   
   
-  <div class="sidebar-wrapper ">
+  <div class="sidebar-wrapper wrap-sticky">
     <div class="sidebar-wrap" data-aos="fade-up">
       
-        <div class="sidebar-author">
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%EF%BC%88%E4%BB%A5%E4%B8%80%E4%BB%BDexcel%E8%A1%A8%E6%A0%BC%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.0.1.</span> <span class="toc-text">基本概念（以一份excel表格为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">1.0.2.</span> <span class="toc-text">数据结构三要素</span></a></li></ol></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -289,8 +300,16 @@
     
   
 </div>
-
+</div>
+        
       
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
       
     </div>
   </div>
@@ -301,17 +320,21 @@
   
 </aside>
 
-          <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-数据结构概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2021-09-22T13:01:47.000Z" itemprop="datePublished">2021-09-22</time>
-    <time style="display: none;" id="post-update-time">2025-05-23</time>
+    <time datetime="2025-05-25T01:17:46.000Z" itemprop="datePublished">2025-05-25</time>
+    <time style="display: none;" id="post-update-time">2025-06-01</time>
   </span>
 </div>
 
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/408/" data-aos="zoom-in">408</a>
+  </div>
+
 
     </div>
     <div class="hr-line"></div>
@@ -320,7 +343,96 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <h2 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h2>
+        <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h3 id="基本概念（以一份excel表格为例）"><a href="#基本概念（以一份excel表格为例）" class="headerlink" title="基本概念（以一份excel表格为例）"></a>基本概念（以一份excel表格为例）</h3><ul>
+<li><p><strong>数据</strong></p>
+<ul>
+<li>有含义的数字、字符及符号（要求能被计算机识别和处理）的集合。</li>
+<li>也即整份 excel 中的全部内容</li>
+</ul>
+</li>
+<li><p><strong>数据元素</strong></p>
+<ul>
+<li>数据的基本单位</li>
+<li>由若干数据项组成</li>
+<li>通常作为一个<u>整体</u>进行考虑和处理</li>
+<li>也即 excel 表中的一行</li>
+</ul>
+</li>
+<li><p><strong>数据项</strong></p>
+<ul>
+<li>构成数据元素的<u>不可分割</u>的最小单位</li>
+<li>也即 excel 表中的一个单元格</li>
+</ul>
+</li>
+<li><p><strong>数据对象</strong></p>
+<ul>
+<li>具有<u>相同性质</u>的数据元素的集合</li>
+<li>是数据的一个子集</li>
+<li>对 excel 表进行筛选操作，筛选出来的所有行可构成一个数据对象</li>
+</ul>
+</li>
+<li><p><strong>数据类型</strong></p>
+<ul>
+<li><p>书上抽象的描述如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据类型是一个值的集合和定义在此集合上的一组操作的总称</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>说白了就是按种类划分，int是一个整数种类，它有它自己的取值范围；double也是一个种类，有它自己的取值范围；而任意一个结构体类型也自成一个种类；可以简单将基本数据类型理解为”姓名“、”年龄“、”身高“等听上去比较单纯的属性，将结构体理解为”学生“等听上去比较复杂的属性（复杂在学生还可以划分出”学号“、”学校“、”“学院”、年级“、”班级“等单纯属性）</li>
+</ul>
+</li>
+<li><p><strong>原子类型</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其值不可再分的数据类型</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个描述有些问题，但可以简单理解为上面说的比较单纯的属性，或者在408里可以直接当作基本数据类型如 int、double、float等类型的集合</li>
+</ul>
+</li>
+<li><p><strong>结构类型</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其值可以再分的数据类型</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以简单理解为上面说的比较复杂的属性</li>
+</ul>
+</li>
+<li><p><strong>抽象数据类型（ADT）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">一个数学模型及其定义在该数学模型上的一组操作。它通常是对数据的某种抽象，定义了数据的取值范围及其结构形式，以及对数据操作的集合。</span><br><span class="line">抽象数据类型侧重于描述数据的逻辑结构和操作接口，而不涉及具体的实现细节。它定义了数据类型的一组数据元素和可以对这些数据元素进行的操作，但不描述这些操作是如何实现的。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>根据上述定义，栈、队列、列表等均属于抽象数据类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">以栈为例（这里方便起见，用 C++ 中STL容器中的 stack 来进行说明）</span><br><span class="line">我们任取一个栈 stack&lt;int&gt;，则：</span><br><span class="line">栈中元素的取值范围：同 int 型变量的取值范围</span><br><span class="line">栈中元素的结构形式：</span><br><span class="line">	1、线性结构</span><br><span class="line">	2、后进先出</span><br><span class="line">	3、采用顺序存储或链式存储</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据结构三要素"><a href="#数据结构三要素" class="headerlink" title="数据结构三要素"></a>数据结构三要素</h3><ul>
+<li><p><strong>逻辑（结构）</strong></p>
+<ul>
+<li>用于表示元素之间的逻辑关系（逻辑关系是抽象出来的 <del>如果你不够抽象，请移步孙吧学习</del>）</li>
+<li>与数据的存储无关（表现为数据的存储位置、存储方式都不会影响元素间的逻辑关系，甚至于如果将存在于你幻想中的对象和存在于现实中的你抽象成两个数据元素的话，即使存在方式不同，也不会影响你们之间一对一（或许是一对多？）且单向连接的逻辑关系）</li>
+<li>逻辑结构分为线性结构和非线性结构<ul>
+<li>线性结构包括：线性表（408也就考到这，其他的就不列了）</li>
+<li>非线性结构包括：树、图、集合（<del>集合可以忽略掉</del>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>存储（结构）</strong></p>
+<ul>
+<li>是数据结构在计算机中的表示（或称映像），也可以叫做物理结构</li>
+<li>可以看作用计算机语言实现的逻辑结构，或者简单理解为我们在编写程序的时候，想要将数据以什么方式存起来</li>
+<li>主要包括：顺序存储（一般由数组实现），链式存储（要借助指针实现），索引存储（<del>不会</del>），散列存储（也叫哈希，后面的章节会提到）</li>
+</ul>
+</li>
+<li><p><strong>运算</strong></p>
+<ul>
+<li>包括运算的定义和运算的实现</li>
+<li>定义针对逻辑结构，如栈的入栈、出栈、取栈顶元素、判空等操作均叫做栈的运算</li>
+<li>实现针对存储结构，如顺序栈（顺序存储的栈）和链栈（链式存储的栈）的相同操作（出入栈等）实现时的具体步骤不同</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
@@ -333,10 +445,51 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
 
     </footer>
   </div>
   
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/6.png" data-sizes="auto" alt="五大基本句型" class="lazyload">
+          
+        
+        <a href="/2025/05/25/%E4%BA%94%E5%A4%A7%E5%9F%BA%E6%9C%AC%E5%8F%A5%E5%9E%8B/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            五大基本句型
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/6.png" data-sizes="auto" alt="测试" class="lazyload">
+        
+      
+      <a href="/2025/05/23/%E6%B5%8B%E8%AF%95/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          测试
+        
+      </h3>
+    </div>
+    
+  </nav>
+
 
 </article>
 
@@ -407,7 +560,17 @@
       <nav id="mobile-nav">
   <div class="sidebar-wrap">
     
-      <div class="sidebar-author">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%EF%BC%88%E4%BB%A5%E4%B8%80%E4%BB%BDexcel%E8%A1%A8%E6%A0%BC%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.0.1.</span> <span class="toc-text">基本概念（以一份excel表格为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">1.0.2.</span> <span class="toc-text">数据结构三要素</span></a></li></ol></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -474,9 +637,17 @@
     
   
 </div>
-
+</div>
+      
     
   </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
   
 </nav>
 
@@ -555,13 +726,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Belinra",
-          title: "关于",
-          url: "http://example.com/about/index.html",
+          title: "数据结构概述",
+          url: "http://example.com/2025/05/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/",
           excerpt: "",
           description: "",
-          stripContent: "关于",
-          date: "Wed Sep 22 2021 21:01:47 GMT+0800",
-          updated: "Fri May 23 2025 23:12:49 GMT+0800",
+          stripContent: "一、概述基本概念（以一份excel表格为例） 数据  有含义的数字、字符及符号（要求能被计算机识别和处理）的集合。 也即整份 excel 中的全部内容   数据元素  数据的基本单位 由若干数据项组成 通常作为一个整体进行考虑和处理 也即 excel 表中的一行   数据项  构成数据元素的不可分割的最小单位 也即 excel 表中的一个单元格   数据对象  具有相同性质的数据元素的集合 是数据的一个子集 对 excel 表进行筛选操作，筛选出来的所有行可构成一个数据对象   数据类型  书上",
+          date: "Sun May 25 2025 09:17:46 GMT+0800",
+          updated: "Sun Jun 01 2025 22:23:34 GMT+0800",
           cover: "/images/banner.webp",
         };
       </script>

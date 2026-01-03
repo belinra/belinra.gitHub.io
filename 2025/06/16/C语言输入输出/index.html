@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
   
   <title>
-    关于 |
+    C/C++输入输出 |
     
     彩虹海
   </title>
@@ -35,19 +35,18 @@
 
   
   
-    <meta name="description" content="关于">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://example.com/about/index.html">
+    <meta name="description" content="输入输出1.输入（也可以叫读入） 把数据放到变量里面的一个操作（或者说把液体【比如水、可乐等】倒入容器【比如保温杯、碗等】的操作）  举个苹果，现在有一个整型变量（int a）和一个 int 范围内的带输入的数字，那么输入操作如下：  1234567&#x2F;&#x2F; C语言读入：scanf(&quot;%d&quot;, &amp;a); &#x2F;* 注意 %d 对应十进制整型数据（即Decimal）&amp;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++输入输出">
+<meta property="og:url" content="http://example.com/2025/06/16/C%E8%AF%AD%E8%A8%80%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/index.html">
 <meta property="og:site_name" content="彩虹海">
-<meta property="og:description" content="关于">
+<meta property="og:description" content="输入输出1.输入（也可以叫读入） 把数据放到变量里面的一个操作（或者说把液体【比如水、可乐等】倒入容器【比如保温杯、碗等】的操作）  举个苹果，现在有一个整型变量（int a）和一个 int 范围内的带输入的数字，那么输入操作如下：  1234567&#x2F;&#x2F; C语言读入：scanf(&quot;%d&quot;, &amp;a); &#x2F;* 注意 %d 对应十进制整型数据（即Decimal）&amp;a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/banner.webp">
-<meta property="article:published_time" content="2021-09-22T13:01:47.000Z">
-<meta property="article:modified_time" content="2025-05-23T15:12:49.620Z">
+<meta property="article:published_time" content="2025-06-16T09:54:57.000Z">
+<meta property="article:modified_time" content="2025-06-16T09:56:30.430Z">
 <meta property="article:author" content="Belinra">
+<meta property="article:tag" content="C&#x2F;C++语法概述">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/banner.webp">
   
   
     <link rel="alternate" href="/atom.xml" title="彩虹海" type="application/atom+xml">
@@ -186,11 +185,13 @@
 <header id="header">
   
     
-      <picture>
-        
-      </picture>
       
-        <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="关于">
+        <picture>
+          
+        </picture>
+        
+          <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="C/C++输入输出">
+        
       
     
   
@@ -200,7 +201,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">关于</h1>
+            <h1 data-aos="slide-up">C/C++输入输出</h1>
           </a>
         
       
@@ -219,10 +220,20 @@
   
   
   
-  <div class="sidebar-wrapper ">
+  <div class="sidebar-wrapper wrap-sticky">
     <div class="sidebar-wrap" data-aos="fade-up">
       
-        <div class="sidebar-author">
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">输入输出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%EF%BC%88%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8F%AB%E8%AF%BB%E5%85%A5%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1.输入（也可以叫读入）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%BE%93%E5%87%BA%EF%BC%88%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8F%AB%E6%89%93%E5%8D%B0%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2.输出（也可以叫打印）</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -289,8 +300,16 @@
     
   
 </div>
-
+</div>
+        
       
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
       
     </div>
   </div>
@@ -301,17 +320,21 @@
   
 </aside>
 
-          <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-C语言输入输出" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2021-09-22T13:01:47.000Z" itemprop="datePublished">2021-09-22</time>
-    <time style="display: none;" id="post-update-time">2025-05-23</time>
+    <time datetime="2025-06-16T09:54:57.000Z" itemprop="datePublished">2025-06-16</time>
+    <time style="display: none;" id="post-update-time">2025-06-16</time>
   </span>
 </div>
 
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/408/" data-aos="zoom-in">408</a>
+  </div>
+
 
     </div>
     <div class="hr-line"></div>
@@ -320,7 +343,21 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <h2 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h2>
+        <h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><h4 id="1-输入（也可以叫读入）"><a href="#1-输入（也可以叫读入）" class="headerlink" title="1.输入（也可以叫读入）"></a>1.输入（也可以叫读入）</h4><ul>
+<li><p><strong>把数据放到变量里面的一个操作</strong>（或者说把液体【比如水、可乐等】倒入容器【比如保温杯、碗等】的操作）</p>
+<ul>
+<li>举个苹果，现在有一个整型变量（int a）和一个 int 范围内的带输入的数字，那么输入操作如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C语言读入：</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a); <span class="comment">/* 注意 %d 对应十进制整型数据（即Decimal）&amp;a 表示把读到的数字存到变量 a 中（如果还记得计组的知识</span></span><br><span class="line"><span class="comment">的话，实际上 &amp; 叫做取地址符，&amp;a 表示取变量 a 的地址，整个操作连一块儿就是读取一个十进制数字并且把整个数字存到地址是 &amp;a </span></span><br><span class="line"><span class="comment">的这个地址块中）*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// C++读入：</span></span><br><span class="line">cin &gt;&gt; a; <span class="comment">//意义跟上面其实一样，但 cin 会自动识别读入数据的类型，并且把数据存入到箭头（&gt;&gt;）指向的变量所在的地址块中</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-输出（也可以叫打印）"><a href="#2-输出（也可以叫打印）" class="headerlink" title="2.输出（也可以叫打印）"></a>2.输出（也可以叫打印）</h4><ul>
+<li><p><strong>把数据从内存中拿出来给人看的操作</strong>（或者说是把容器里的液体倒出来看看，意思大概是这么个意思，说细了头疼，为了你我的头都不疼，就只知道这个就可以了）</p>
+<ul>
+<li>再举个pig，刚刚读进来的数字存到了变量 a 里面，现在我们想看看变量 a 里面存的是什么东西（不想的话就强迫自己想一下，很快的），于是有了如下操作：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C语言输出</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">/* %d 还是那个 %d，a 也还是那个 a，不同的是 a 前面没有了 &amp;，因为 &amp;a 本身表示的是变量 a 所在地址块</span></span><br><span class="line"><span class="comment">的地址（一般长成 0x???? 的样子）如果加了 &amp;，就会把 a 所在地址块儿的地址输出出来，不加 &amp; 就是把变量 a 所在地址块里面存的</span></span><br><span class="line"><span class="comment">数据拿出来瞅瞅。整个操作连一块儿就是把 a 所在地址块里存的数据拿出来，以十进制（%d）的形式打印出来给你瞅瞅*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// C++输出</span></span><br><span class="line">cout &lt;&lt; a; <span class="comment">// 意义跟上面也一样，但 cout 会自动识别 a 的数据类型，并把 a 所在地址块里面的数据转换成 a 的类型并输出</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
@@ -333,10 +370,34 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/C-C-%E8%AF%AD%E6%B3%95%E6%A6%82%E8%BF%B0/" rel="tag">C&#x2F;C++语法概述</a></li></ul>
+
 
     </footer>
   </div>
   
+  <nav id="article-nav" data-aos="fade-up">
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/9.png" data-sizes="auto" alt="Dictionary" class="lazyload">
+        
+      
+      <a href="/2025/06/07/Dictionary/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          Dictionary
+        
+      </h3>
+    </div>
+    
+  </nav>
+
 
 </article>
 
@@ -407,7 +468,17 @@
       <nav id="mobile-nav">
   <div class="sidebar-wrap">
     
-      <div class="sidebar-author">
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">输入输出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%EF%BC%88%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8F%AB%E8%AF%BB%E5%85%A5%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1.输入（也可以叫读入）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%BE%93%E5%87%BA%EF%BC%88%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8F%AB%E6%89%93%E5%8D%B0%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2.输出（也可以叫打印）</span></a></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
   <div class="sidebar-author-name">Belinra</div>
   <div class="sidebar-description"></div>
@@ -474,9 +545,17 @@
     
   
 </div>
-
+</div>
+      
     
   </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
   
 </nav>
 
@@ -555,13 +634,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "Belinra",
-          title: "关于",
-          url: "http://example.com/about/index.html",
+          title: "C/C++输入输出",
+          url: "http://example.com/2025/06/16/C%E8%AF%AD%E8%A8%80%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/",
           excerpt: "",
           description: "",
-          stripContent: "关于",
-          date: "Wed Sep 22 2021 21:01:47 GMT+0800",
-          updated: "Fri May 23 2025 23:12:49 GMT+0800",
+          stripContent: "输入输出1.输入（也可以叫读入） 把数据放到变量里面的一个操作（或者说把液体【比如水、可乐等】倒入容器【比如保温杯、碗等】的操作）  举个苹果，现在有一个整型变量（int a）和一个 int 范围内的带输入的数字，那么输入操作如下：  1234567// C语言读入：scanf(&amp;quot;%d&amp;quot;, &amp;amp;a); /* 注意 %d 对应十进制整型数据（即Decimal）&amp;amp;a 表示把读到的数字存到变量 a 中（如果还记得计组的知识的话，实际上 &amp;amp; 叫做取地址符，&amp;am",
+          date: "Mon Jun 16 2025 17:54:57 GMT+0800",
+          updated: "Mon Jun 16 2025 17:56:30 GMT+0800",
           cover: "/images/banner.webp",
         };
       </script>

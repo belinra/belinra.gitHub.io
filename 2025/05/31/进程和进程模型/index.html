@@ -1,0 +1,914 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://example.com';</script>
+  
+  <title>
+    进程和进程模型 |
+    
+    彩虹海
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="进程和进程模型程序 定义 一组有序指令的静态集合 一组不是多组 有序，这样才知道先执行哪条指令，后执行哪条指令 静态，因为它只是存在，并没有被执行 集合（参见《离散数学》）      进程 定义 是程序的一次执行过程，同一个程序的多次执行会对应多个进程 其实就是正在进行中的程序，程序和进程的关系等价于类和对象的关系（如果你了解这玩意儿的话 没对象？new一个）     特征 动态性 进程有创建、活">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程和进程模型">
+<meta property="og:url" content="http://example.com/2025/05/31/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="彩虹海">
+<meta property="og:description" content="进程和进程模型程序 定义 一组有序指令的静态集合 一组不是多组 有序，这样才知道先执行哪条指令，后执行哪条指令 静态，因为它只是存在，并没有被执行 集合（参见《离散数学》）      进程 定义 是程序的一次执行过程，同一个程序的多次执行会对应多个进程 其实就是正在进行中的程序，程序和进程的关系等价于类和对象的关系（如果你了解这玩意儿的话 没对象？new一个）     特征 动态性 进程有创建、活">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-31T08:30:51.000Z">
+<meta property="article:modified_time" content="2025-05-31T11:00:25.349Z">
+<meta property="article:author" content="Belinra">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="彩虹海" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL&#x2F;toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx&#x2F;1oA&#x2F;0l8ysE" crossorigin="anonymous">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css" integrity="sha384-4NN3fZ5AokFyHuoihl7A9qWaCt+HsAtOaUsXwJGRb4&#x2F;SMBtFr2vcNSHR5E8dg0Wk" crossorigin="anonymous">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      
+      
+        
+      
+      <div class="loading-word">向彩虹海进发中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/">首页</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/archives">归档</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/about">关于</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+             
+              &#xe62b;
+             
+          </div>
+          <a class="main-nav-link" href="/friend">友链</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img crossorigin="anonymous" fetchpriority="high" src="/images/banner.webp" alt="进程和进程模型">
+        
+      
+    
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">进程和进程模型</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">进程和进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.0.1.</span> <span class="toc-text">程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.0.2.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%BE%81"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E7%8A%B6%E6%80%81%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.0.3.</span> <span class="toc-text">五状态进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%80%81"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">创建态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%B1%E7%BB%AA%E6%80%81"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">就绪态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E6%80%81"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">退出态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%80%81"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">运行态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%80%81%EF%BC%88%E7%AD%89%E5%BE%85%E6%80%81%EF%BC%89"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">阻塞态（等待态）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%8C%82%E8%B5%B7%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E6%A8%A1"><span class="toc-number">1.0.4.</span> <span class="toc-text">带挂起的进程状态模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">挂起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">激活</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.3.</span> <span class="toc-text">阻塞挂起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%B1%E7%BB%AA%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.4.</span> <span class="toc-text">就绪挂起</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
+  <div class="sidebar-author-name">Belinra</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">11</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">2</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">7</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-进程和进程模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-05-31T08:30:51.000Z" itemprop="datePublished">2025-05-31</time>
+    <time style="display: none;" id="post-update-time">2025-05-31</time>
+  </span>
+</div>
+
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/408/" data-aos="zoom-in">408</a>
+  </div>
+
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="进程和进程模型"><a href="#进程和进程模型" class="headerlink" title="进程和进程模型"></a>进程和进程模型</h1><h3 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h3><ul>
+<li><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
+<li><strong>一组有序指令的静态集合</strong><ul>
+<li>一组不是多组</li>
+<li>有序，这样才知道先执行哪条指令，后执行哪条指令</li>
+<li>静态，因为它只是存在，并没有被执行</li>
+<li>集合（<del>参见《离散数学》</del>）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
+<li><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><ul>
+<li><strong>是程序的一次执行过程，同一个程序的多次执行会对应多个进程</strong><ul>
+<li>其实就是正在进行中的程序，程序和进程的关系等价于类和对象的关系（如果你了解这玩意儿的话 <del>没对象？new一个</del>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h4><ul>
+<li><strong>动态性</strong><ul>
+<li>进程有创建、活动、暂停、终止等过程，它是有自己的“生命”的</li>
+<li>进程是动态地产生、变化和消亡的</li>
+<li>动态性是进程最基本的特征</li>
+</ul>
+</li>
+<li><strong>并发性</strong><ul>
+<li>指多个进程可以在<u>一段时间内</u>同时运行</li>
+<li>这是引入进程这个概念的目的，因为进程是有“生命”、有状态的，在一段时间内由一个进程切换到另一个进程时，我们可以记录当前进程的状态，当需要切换回到当前进程时，我们将刚刚记录的进程的状态复现，即可继续运行刚刚的进程（只要CPU足够渣，多运行几个进程又有何难？<del>弱水三千淹不死我，只取一瓢不可能的</del>）</li>
+<li>并发性是进程的重要特征，也是操作系统的重要特征</li>
+</ul>
+</li>
+<li><strong>独立性</strong><ul>
+<li>一个进程是一个能独立运行、独立获得资源和独立接受调度的基本单位<ul>
+<li>说白了就是不管是运行还是获取资源，又或者是被调度，都只是一个进程自己的事情，和其他任何进程都无关（独立自主的三好进程）</li>
+</ul>
+</li>
+<li>凡未建立PCB的程序，都不能作为一个独立的单位参与运行<ul>
+<li>PCB相当于进程的身份证，没有PCB的进程就是一个黑户，这显然是不合法的</li>
+<li>计算机与现实生活不同，它不存在灰色地带，所以黑户是不可能在计算机中存在的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>异步性</strong><ul>
+<li>进程以不可预知的速度向前推进，内存中正在执行的进程随时都可以暂停并切换到另一个进程去执行。这显然会导致执行结果的不可预知性</li>
+<li>为此在操作系统中必须配置相应的进程同步机制</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="五状态进程模型"><a href="#五状态进程模型" class="headerlink" title="五状态进程模型"></a>五状态进程模型</h3><ul>
+<li><h4 id="创建态"><a href="#创建态" class="headerlink" title="创建态"></a>创建态</h4><ul>
+<li><strong>进程正在创建时的状态</strong><ul>
+<li>这时候的进程已经分配好了PCB</li>
+<li>正在分配进程执行所需要的除CPU外的其他资源</li>
+</ul>
+</li>
+<li><strong>只能通往就绪态，不存在任何状态可以转变到创建态</strong>（只考虑正常情况下）<ul>
+<li>所有除CPU以外的资源得到满足后，进程转变到就绪态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="就绪态"><a href="#就绪态" class="headerlink" title="就绪态"></a>就绪态</h4><ul>
+<li><strong>等待获取CPU时的状态</strong><ul>
+<li>进程所有除CPU以外的执行条件均已满足、</li>
+<li>获取CPU后可以直接运行</li>
+<li>同一时间可能有多个处于就绪态的进程，它们会被组织成一个<u>就绪队列</u></li>
+</ul>
+</li>
+<li><strong>由创建态或阻塞态转变而来，只能通往运行态</strong><ul>
+<li>得到CPU后转变到运行态（进程调度）</li>
+</ul>
+</li>
+<li><strong>引起进程创建的情况</strong><ul>
+<li>系统初始化时</li>
+<li>用户请求创建新进程</li>
+<li>正在运行的进程执行了创建新进程的系统调用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="退出态"><a href="#退出态" class="headerlink" title="退出态"></a>退出态</h4><ul>
+<li><strong>进程运行终止后，回收资源和PCB时的状态</strong></li>
+<li><strong>进程退出的情况</strong><ul>
+<li>正常退出（自愿退出，被动）</li>
+<li>主动退出（自愿退出，被动）</li>
+<li>致命错误（强制退出，被动）</li>
+<li>被系统或其他进程杀死（强制退出，被动）</li>
+</ul>
+</li>
+<li><strong>只能由运行态转变而来</strong>（只考虑正常情况下）</li>
+</ul>
+</li>
+<li><h4 id="运行态"><a href="#运行态" class="headerlink" title="运行态"></a>运行态</h4><ul>
+<li><strong>正在执行的进程</strong><ul>
+<li>进程正在占用CPU</li>
+<li>如果只有一个单核CPU，则操作系统中同一时刻只有一个处于运行态的进程</li>
+</ul>
+</li>
+<li><strong>可以通往就绪态、阻塞态、退出态</strong><ul>
+<li>CPU被抢占则转变为就绪态（只在抢占式调度下存在）</li>
+<li>需要除CPU外的其他资源或事件发生则转变为阻塞态</li>
+<li>出现致命错误、被强杀或主动退出，则转变为退出态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="阻塞态（等待态）"><a href="#阻塞态（等待态）" class="headerlink" title="阻塞态（等待态）"></a>阻塞态（等待态）</h4><ul>
+<li><strong>已经创建好的进程渴望得到除CPU外的其他资源或事件</strong>（<del>缺的不只是爱，还有钱财</del>）<ul>
+<li>等待事件结束</li>
+<li>等待资源获取</li>
+<li>不能干占着**不**，于是退还CPU，从运行态转向阻塞态</li>
+<li>不同的阻塞原因会产生不同的阻塞队列</li>
+</ul>
+</li>
+<li><strong>只能通往就绪态（唤醒进程）</strong><ul>
+<li>被阻塞进程需要的资源被满足，转变为就绪态</li>
+<li>被阻塞进程等待的事件到达，转变为就绪态</li>
+<li>只有进程自身才知道何时需要等待某种事件的发生，因此只能由运行态转为阻塞态</li>
+<li>进程只能被别的进程或操作系统唤醒</li>
+</ul>
+</li>
+<li><strong>408范围内常见阻塞情况</strong><ul>
+<li>进程发起I&#x2F;O操作等待I&#x2F;O设备分配或等待其完成的过程中（I&#x2F;O阻塞）</li>
+<li>进程对值小于等于0的信号执行P操作（信号量阻塞）</li>
+<li>对管程中的条件变量执行wait()操作（条件变量阻塞）</li>
+<li>试图创建进程却无法申请到足够的资源（其他资源申请阻塞）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="带挂起的进程状态模"><a href="#带挂起的进程状态模" class="headerlink" title="带挂起的进程状态模"></a>带挂起的进程状态模</h3><ul>
+<li><h4 id="挂起"><a href="#挂起" class="headerlink" title="挂起"></a>挂起</h4><ul>
+<li>计算机中的内存空间是有限的，当内存空间不足时，操作系统需要将一部分短时间内可能不执行的进程换回到外存中，这种操作叫做挂起<ul>
+<li>内存空间不足</li>
+<li>将部分进程从内存换回到外存</li>
+<li>这部分进程短时间内可能不执行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h4><ul>
+<li>挂起一部分进程的同时，把更有可能执行的进程从外存中放入内存</li>
+</ul>
+</li>
+<li><h4 id="阻塞挂起"><a href="#阻塞挂起" class="headerlink" title="阻塞挂起"></a>阻塞挂起</h4><ul>
+<li><strong>进程在外存并等待某事件的发生或某资源的分配</strong><ul>
+<li>若在外存中满足了除CPU以外的所有执行条件，则阻塞挂起会转变为就绪挂起状态</li>
+<li>仅能由阻塞态转变而来</li>
+<li>仅能转变到就绪挂起态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="就绪挂起"><a href="#就绪挂起" class="headerlink" title="就绪挂起"></a>就绪挂起</h4><ul>
+<li><strong>进程在外存，但只要进入内存（并分配给它CPU），即可运行</strong><ul>
+<li>激活后进入就绪态</li>
+<li>可由就绪态、运行态、创建态、阻塞挂起态转变而来</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/8.png" data-sizes="auto" alt="进程调度" class="lazyload">
+          
+        
+        <a href="/2025/06/04/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            进程调度
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://raw.githubusercontent.com/belinra/My_blog_images/refs/heads/main/16.png" data-sizes="auto" alt="作文模板" class="lazyload">
+        
+      
+      <a href="/2025/05/31/%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          作文模板
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      Belinra
+    </div>
+    
+      <div>
+        基于&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        6.9k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        00:26
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">进程和进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.0.1.</span> <span class="toc-text">程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.0.2.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%BE%81"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E7%8A%B6%E6%80%81%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.0.3.</span> <span class="toc-text">五状态进程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%80%81"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">创建态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%B1%E7%BB%AA%E6%80%81"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">就绪态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E6%80%81"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">退出态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%80%81"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">运行态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%80%81%EF%BC%88%E7%AD%89%E5%BE%85%E6%80%81%EF%BC%89"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">阻塞态（等待态）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%8C%82%E8%B5%B7%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E6%A8%A1"><span class="toc-number">1.0.4.</span> <span class="toc-text">带挂起的进程状态模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">挂起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">激活</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.3.</span> <span class="toc-text">阻塞挂起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%B1%E7%BB%AA%E6%8C%82%E8%B5%B7"><span class="toc-number">1.0.4.4.</span> <span class="toc-text">就绪挂起</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Belinra" class="lazyload">
+  <div class="sidebar-author-name">Belinra</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">11</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">2</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">7</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          
+            &#xe62b;
+          
+        </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/material-theme@1.0.0/dist/material-theme.umd.js" integrity="sha384-vLev0II0HKFaxkcm+&#x2F;7kX5IGwVFBASkGchU311wmU&#x2F;veIj2bB0UcBkQbW6yw2asK" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Belinra",
+          title: "进程和进程模型",
+          url: "http://example.com/2025/05/31/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9E%8B/",
+          excerpt: "",
+          description: "",
+          stripContent: "进程和进程模型程序 定义 一组有序指令的静态集合 一组不是多组 有序，这样才知道先执行哪条指令，后执行哪条指令 静态，因为它只是存在，并没有被执行 集合（参见《离散数学》）      进程 定义 是程序的一次执行过程，同一个程序的多次执行会对应多个进程 其实就是正在进行中的程序，程序和进程的关系等价于类和对象的关系（如果你了解这玩意儿的话 没对象？new一个）     特征 动态性 进程有创建、活动、暂停、终止等过程，它是有自己的“生命”的 进程是动态地产生、变化和消亡的 动态性是进程最基本的特",
+          date: "Sat May 31 2025 16:30:51 GMT+0800",
+          updated: "Sat May 31 2025 19:00:25 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.8.5' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
